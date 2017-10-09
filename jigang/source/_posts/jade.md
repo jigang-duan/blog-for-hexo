@@ -1,3 +1,11 @@
+---
+title: Jade - 模板引擎
+date: 2017-03-25 12:26:28
+tags:
+- Jade
+- nodejs
+---
+
 # Jade - 模板引擎
 
 Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 影响，它是用 JavaScript 实现的, 并且可以供 [Node](http://nodejs.org) 使用.
@@ -60,24 +68,24 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
   - 静态包含
   - 属性改写
   - 安全，默认代码是转义的
-  - 运行时和编译时上下文错误报告 
+  - 运行时和编译时上下文错误报告
   - 命令行下编译jade模板
   - HTML5 模式 (使用 ~~`!!! 5`~~ `doctype html` 文档类型)
   - 在内存中缓存(可选)
   - 合并动态和静态标签类
   - 可以通过 `filters` 修改树
   - 模板继承
-  - 原生支持 [Express JS](http://expressjs.com) 
+  - 原生支持 [Express JS](http://expressjs.com)
   - 通过 `each` 枚举对象、数组甚至是不能枚举的对象
   - 块注释
   - 没有前缀的标签
   - AST Filters
   - 过滤器
     - `:stylus` 必须已经安装 [stylus](http://github.com/LearnBoost/stylus)
-    - `:less` 必须已经安装 [less.js](http://github.com/cloudhead/less.js) 
-    - `:markdown` 必须已经安装 [markdown-js](http://github.com/evilstreak/markdown-js) 或者 [node-discount](http://github.com/visionmedia/node-discount) 
+    - `:less` 必须已经安装 [less.js](http://github.com/cloudhead/less.js)
+    - `:markdown` 必须已经安装 [markdown-js](http://github.com/evilstreak/markdown-js) 或者 [node-discount](http://github.com/visionmedia/node-discount)
     - `:cdata`
-    - `:coffeescript` 必须已经安装[coffee-script](http://jashkenas.github.com/coffee-script/) 
+    - `:coffeescript` 必须已经安装[coffee-script](http://jashkenas.github.com/coffee-script/)
   - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
@@ -108,17 +116,17 @@ npm install jade
 
 把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:
 
-```sh 
+```sh
 $ make jade.js
 ```
 
-如果你已经安装了 uglifyjs (`npm install uglify-js`)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。 
- 
+如果你已经安装了 uglifyjs (`npm install uglify-js`)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。
+
 ```sh
 make jade.min.js
 ```
 
-默认情况下，为了方便调试Jade会把模板组织成带有形如 `__.lineno = 3` 的行号的形式。 
+默认情况下，为了方便调试Jade会把模板组织成带有形如 `__.lineno = 3` 的行号的形式。
 在浏览器里使用的时候，你可以通过传递一个选项 `{ compileDebug: false }` 来去掉这个。
 下面的模板
 
@@ -175,12 +183,12 @@ fn(locals);
  - `pretty`    为输出加上了漂亮的空格缩进 _(默认为 `false`)_
 
 <a name="a6"/>
-## 语法 
+## 语法
 
 <a name="a6-1"/>
 ### 行结束标志
 
-**CRLF** 和 **CR** 会在编译之前被转换为 **LF** 
+**CRLF** 和 **CR** 会在编译之前被转换为 **LF**
 
 <a name="a6-2"/>
 ### 标签
@@ -229,7 +237,7 @@ div.user-details
 ```
 
 <a name="a6-3"/>
-### 标签文本 
+### 标签文本
 
 只需要简单的把内容放在标签之后：
 
@@ -324,12 +332,12 @@ asd
 </p>
 ```
 
-这和带一个空格的 `.` 是不一样的, 带空格的会被 Jade 的解析器忽略，当作一个普通的文字: 
+这和带一个空格的 `.` 是不一样的, 带空格的会被 Jade 的解析器忽略，当作一个普通的文字:
 
 ```jade
 p .
 ```
-    
+
 渲染为:
 
 ```jade
@@ -441,7 +449,7 @@ ul
 ```
 
 <a name="a6-7"/>
-### 块展开 
+### 块展开
 
 块展开可以帮助你在一行内创建嵌套的标签，下面的例子和上面的是一样的：
 
@@ -510,7 +518,7 @@ input(type="checkbox", checked)
 ```jade
 input(type="checkbox", checked=someValue)
 ```
-    
+
 多行同样也是可用的：
 
 ```jade
@@ -853,14 +861,14 @@ for user in users
   unless user.isAnonymous
     p
       | Click to view
-      a(href='/users/' + user.id)= user.name 
+      a(href='/users/' + user.id)= user.name
 ```
 
 <a name="a11"/>
 ## 模板继承
 
 Jade 支持通过 `block` 和 `extends` 关键字来实现模板继承。 一个块就是一个 Jade 的 block ，它将在子模板中实现，同时是支持递归的。
-  
+
 Jade 块如果没有内容，Jade 会添加默认内容，下面的代码默认会输出 `block scripts`, `block content`, 和 `block foot`.
 
 ```jade
@@ -1119,7 +1127,7 @@ mixin profile(user)
 ```
 
 <a name="a15"/>
-## 产生输出 
+## 产生输出
 
 假设我们有下面的 Jade 源码：
 
@@ -1186,13 +1194,13 @@ function anonymous(locals) {
 ##  Makefile 的一个例子
 
 通过执行 `make`， 下面的 Makefile 例子可以把 `pages/*.jade` 编译为 `pages/*.html` 。
- 
+
 ```make
 JADE = $(shell find pages/*.jade)
 HTML = $(JADE:.jade=.html)
 
 all: $(HTML)
-	
+
 %.html: %.jade
 	jade < $< --path $< > $@
 
@@ -1202,7 +1210,7 @@ clean:
 .PHONY: clean
 ```
 
-这个可以和 `watch(1)` 命令起来产生像下面的行为： 
+这个可以和 `watch(1)` 命令起来产生像下面的行为：
 
 ```sh
 $ watch make
@@ -1235,17 +1243,17 @@ Examples:
   # 生成 {foo,bar}.html
   $ jade {foo,bar}.jade
 
-  # 在标准IO下使用jade 
+  # 在标准IO下使用jade
   $ jade < my.jade > my.html
 
   # 在标准IO下使用jade, 同时指定用于查找包含的文件
   $ jade < my.jade -p my.jade > my.html
 
-  # 在标准IO下使用jade 
+  # 在标准IO下使用jade
   $ echo "h1 Jade!" | jade
 
   # foo, bar 目录渲染到 /tmp
-  $ jade foo bar --out /tmp 
+  $ jade foo bar --out /tmp
 
 ```
 
@@ -1259,7 +1267,7 @@ Examples:
   - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bjade%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
 
 <a name="a19"/>
-## License 
+## License
 
 (The MIT License)
 
