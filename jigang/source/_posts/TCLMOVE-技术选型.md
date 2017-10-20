@@ -2,11 +2,12 @@
 title: TCLMOVE 技术选型
 date: 2017-10-19 19:50:15
 tags:
-	- iOS
-	- 架构设计
+- iOS
+- 架构设计
 categories: TCLMOVE
 ---
 
+![TCLMOVE](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/tclmove1.png)
 
 * Swift
 * Storyboard

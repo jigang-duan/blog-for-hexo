@@ -1,8 +1,8 @@
 ---
 title: Java界的神器-使用Lombok来消除你的冗余代码量
 date: 2017-10-09 11:23:46
-tags: 
-	- Java
+tags:
+- Java
 ---
 
 
@@ -92,9 +92,9 @@ lombok.addGeneratedAnnotation = false
  		this.name = name;
  	}
  }
- 
+
 ```
- 
+
 
 到这里，大家肯定要问了，你说相当就等啊，或者上面相等的代码是怎么来的呢，其他我们可以直接反编译生成的class文件查看，打开Android Studio的class目录下的User.class文件，可以看到
 

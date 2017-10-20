@@ -2,11 +2,12 @@
 title: TCLMOVE 架构设计
 date: 2017-10-19 19:49:52
 tags:
-	- iOS
-	- 架构设计
+- iOS
+- 架构设计
 categories: TCLMOVE
 ---
 
+![TCLMOVE](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/tclmove1.png)
 
 `架构`，就是对`软件复杂度`的`管理`。
 
@@ -130,15 +131,14 @@ Change Events,当数据库数据改变时，产生相应的通知事件。
 
 然后，记住以下几点：
 > `State` 是只读的
-> 
+>
 > 惟一改变 `State` 的方法就是触发 `action`，通过 `reducers` 改变 `states`
-> 
+>
 > `states`的结构尽量扁平化，不要有太多的嵌套。
-> 
+>
 
 ### Repository
 
 `Repository`采用外观模式。
 
 `Repository`对接Persistence Layer，提供一组一致的接口，定义一个高层接口，上层不关心数据来源于那里（那个网络服务器或蓝牙或数据库），它只关心它要的数据。
-

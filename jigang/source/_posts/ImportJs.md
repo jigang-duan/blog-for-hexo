@@ -2,11 +2,11 @@
 title: impress.js
 date: 2017-10-11 11:18:41
 tags:
-	- impress.js
-	- 幻灯片
-	- js
-	- 前端
-	- 工具	
+ - impress.js
+ - 幻灯片
+ - js
+ - 前端
+ - 工具
 ---
 
 **impress.js** 是一个**Javascript程序包**，它的功能是让你制作出令人眩目的内容展示效果，主要里利用了CSS 3D Transforms 里的旋转，扭曲，缩放等特性。简言之，**代替ppt**。

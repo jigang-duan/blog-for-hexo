@@ -2,16 +2,16 @@
 title: '《App研发录》笔记:第一部分 高效App框架设计与重构'
 date: 2017-10-20 16:11:59
 tags:
-	- App研发录
-	- 笔记
-	- App
-	- Android
-categories: 
-	-《App研发录》笔记
-	
+- App研发录
+- 笔记
+- App
+- Android
+categories:
+- 'App研发录 笔记'
+
 ---
 
-[TOC]
+![App研发录](https://img3.doubanio.com/lpic/s28333166.jpg)
 
 ## 第一部分 高效App框架设计与重构 ###
 
@@ -25,32 +25,32 @@ categories:
 	- com.infrastructure.activity: 业务无关的 Activity 基类
 		- AndroidLib 下的基类 BaseActivity 封装的是业务无关的公用逻辑
 		- AppBaseActivity 基类封装的是业务相关的公用逻辑
-	
+
 	![activity](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/app_yanfanl_1-1.png)
-	
+
 	- com.infrastructure.net: 网络底层封装
 	- com.infrastructure.cache: 缓存数据和图片的相关处理
 	- com.infrastructure.ui: 自定义控件
 	- com.infrastructure.utils: 各种与业务无关的公用方法，比如对 SharedPreferences 的封装
 2. 主项目中的类分门别类地进行划分
-	* activity:我们按照模块继续拆分，将不同模块的 
-	* Activity 划分到不同的包下。  
+	* activity:我们按照模块继续拆分，将不同模块的
+	* Activity 划分到不同的包下。 
 	* adapter:所有适配器都放在一起	* entity:将所有的实体都放在一起	* db:SQLLite 相关逻辑的封装	* engine:将业务相关的类都放在一起	* ui:将自定义控件都放在这个包中
-	* utils:将所有的公用方法都放在这里 
+	* utils:将所有的公用方法都放在这里
 	* interfaces:真正意义上的接口，命名以 I 作为开头
 	* listener:基于 Listener 的接口，命名以 On 作为开头
 
 > 每个文件只有一个单独的类，不要有嵌套类，比如在 Activity 中嵌套 Adapter、Entity
-> 
+>
 > 将 Activity 按照模块拆分归类后，可以迅速定位具体的一个页面。
 > 此外，将开发人员按照模块划分后，每个开发人员都只负责自己的那个包，开发边界线很清晰。
 
 #### 为 Activity 定义新的生命周期
 
 > 单一职责:一个类或方法，只做一件事情
- 
+
  ![onCreate](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/app_yanfanl_1-5.png)
- 
+
 * `initVariables`: 初始化变量，包括 Intent 带的数据和 Activity 内的变量* `initViews`: 加载 layout 布局文件，初始化控件，为控件挂上事件方法
 * `loadData`: 调用 MobileAPI 获取数据
 
@@ -76,15 +76,15 @@ BaseAdapter
 内置一个 Holder 嵌套类，用于存放 ListView 中每一行中的控件。
 ViewHolder 的存在，可以避免频繁创建同一个列表项，从而极大地节省内存。
 
-``` Java 
-class ViewHolder {	TextView tvCinemaName;	TextView tvCinemaId; 
+``` Java
+class ViewHolder {	TextView tvCinemaName;	TextView tvCinemaId;
 }
 ```
 
 #### 类型安全转换函数
 
 > 因为类型转换不正确导致的崩溃占了很大的比例
- 
+
 * 空类型
 * 区域越界
 
@@ -106,14 +106,14 @@ MobileAPI 接口的信息都 放在 url.xml 文件中:
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 	<Node
-		Key="getWeatherInfo" 
+		Key="getWeatherInfo"
 		Expires="300"		NetType="get"
 		Url="http://www.weather.com.cn/data/sk/101010100.html" />
-		
+
 	<Node
-		Key="login" 
+		Key="login"
 		Expires="0"		NetType="post"
-		Url="http://www.weather.com.cn/data/login.api" /></url> 
+		Url="http://www.weather.com.cn/data/login.api" /></url>
 
 ```
 
@@ -124,12 +124,12 @@ MobileAPI 接口的信息都 放在 url.xml 文件中:
 ``` Java
 @Overrideprotected void loadData() {	weatherCallback = new RequestCallback() {
 			@Override		public void onSuccess(String content) {			//TODO: 		}
-				@Override		public void onFail(String errorMessage) {			//TODO: 
+				@Override		public void onFail(String errorMessage) {			//TODO:
 		}
 	};
-			ArrayList<RequestParameter> params = new ArrayList<RequestParameter>(); 
-	RequestParameter rp1 = new RequestParameter("cityId", "111"); 
-	RequestParameter rp2 = new RequestParameter("cityName", "Beijing"); 
+			ArrayList<RequestParameter> params = new ArrayList<RequestParameter>();
+	RequestParameter rp1 = new RequestParameter("cityId", "111");
+	RequestParameter rp2 = new RequestParameter("cityName", "Beijing");
 	params.add(rp1);	params.add(rp2);	RemoteService.getInstance().invoke(this, "getWeatherInfo", params, weatherCallback);}
 ```
 
@@ -161,7 +161,7 @@ public abstract class AppBaseActivity extends BaseActivity {
 			public abstract void onSuccess(String content);
 				public void onFail(String errorMessage) {			new AlertDialog.Builder(AppBaseActivity.this)
 				.setTitle(" 出错啦 ").setMessage(errorMessage)
-				.setPositiveButton(" 确定 ", null).show();		} 
+				.setPositiveButton(" 确定 ", null).show();		}
 	}}
 ```
 
@@ -181,7 +181,7 @@ public abstract class AppBaseActivity extends BaseActivity {
 2. 在 url.xml 中为每一个 MobileAPI 接口配置缓存时间 Expired。对于 post，一律设置为 0，因为 post 不需要缓存。
 3. 在 HttpRequest 类中的 run 方法中，改动 3 个地方:
 	- 写一个排序算法 sortKeys，对 URL 中的 key 进行排序。
-	- 将 newUrl 作为 key，检查缓存中是否有数据，有则直接返回;否则，继续调用MobileAPI 接口。 
+	- 将 newUrl 作为 key，检查缓存中是否有数据，有则直接返回;否则，继续调用MobileAPI 接口。
 	- MobileAPI 接口返回数据后，将数据存入缓存。
 4. CacheManager 用于操作读写缓存数据，并判断缓存数据是否过期。缓存中存放的实 体就是 CacheItem。
 5. 在 App 项目中，创建 YoungHeartApplication 这个 Application 级别的类，在程序启动 时，初始化缓存的目录，如果不存在则创建之。
@@ -215,7 +215,7 @@ check-value: AppId ClientType MD5
 ##### 时间校准
 
 > Date 永远使用UTC 时间
- 
+
 ##### 开启 gzip 压缩
 
 ### 第3章 Android 经典场景设计
@@ -231,7 +231,7 @@ App 缓存分为两部分，数据缓存和图片缓存。
 ImageLoader 的工作原理 : 在显示图片的时候，先在内存中查找; 如果没有，就去本地查找;如果还没有，就开一个新的线程去下载这张图片，下载成功会把图片同时缓存到内存和本地。
 
 每次退出一个页面的时候，把 ImageLoader 内存中的缓存全都清除，这样就节省了大量内存。
-ImageLoader 对图片是软引用的形式，所以内存中的图片会在内存不足的时 候被系统回收(内存足够的时候不会对其进行垃圾回收)。 
+ImageLoader 对图片是软引用的形式，所以内存中的图片会在内存不足的时 候被系统回收(内存足够的时候不会对其进行垃圾回收)。
 
 **ImageLoader 优化**
 
@@ -302,11 +302,11 @@ API 层面进行优化:
 HTML5:
 
 ``` html
-<script type="text/javascript"> 
+<script type="text/javascript">
 	function changeColor (color) {
 		document.body.style.backgroundColor = color;
 	}
-</script>	
+</script>
 ```
 
 Android:
@@ -315,10 +315,10 @@ Android:
 wvAds.getSettings().setJavaScriptEnabled(true);
 wvAds.loadUrl("file:// /android_asset/104.html");
 
-btnShowAlert.setOnClickListener(new View.OnClickListener() { 
-	@Override	public void onClick(View v) { 
-		String color = "#00ee00";		wvAds.loadUrl("javascript: changeColor ('" + color + "');"); 
-	} 
+btnShowAlert.setOnClickListener(new View.OnClickListener() {
+	@Override	public void onClick(View v) {
+		String color = "#00ee00";		wvAds.loadUrl("javascript: changeColor ('" + color + "');");
+	}
 });
 ```
 
@@ -329,7 +329,7 @@ btnShowAlert.setOnClickListener(new View.OnClickListener() {
 HTML5:
 
 ``` html
-<a onclick="baobao.callAndroidMethod(100,100,'ccc',true)"> 
+<a onclick="baobao.callAndroidMethod(100,100,'ccc',true)">
 	CallAndroidMethod</a>
 ```
 Android:
@@ -338,7 +338,7 @@ Android:
 class JSInteface1 {	public void callAndroidMethod(int a, float b, String c, boolean d) {		if (d) { 			String strMessage = "-" + (a + 1) + "-" + (b + 1) + "-" + c + "-" + d;			
 			new AlertDialog.Builder(MainActivity.this)
 				.setTitle("title")
-				.setMessage(strMessage).show();		} 
+				.setMessage(strMessage).show();		}
 	}}
 ```
 注册 baobao 和 JSInterface1 的对应关系:
@@ -369,24 +369,24 @@ HTML5 的缺点是慢
 
 ``` html
 <a onclick="baobao.gotoAnyWhere(
-		'com.example.youngheart.MovieDetailActivity, 
+		'com.example.youngheart.MovieDetailActivity,
 		iOS.MovieDetailViewController:movieId=(int)123')">			gotoAnyWhere</a>
 ```
 
 ``` java
-public class BaseActivity extends Activity { 
-	public void gotoAnyWhere(String url) { 
+public class BaseActivity extends Activity {
+	public void gotoAnyWhere(String url) {
 		if (url == null)			return;
 					String pageName = getAndroidPageName(url);		if (pageName == null || pageName.trim() == "")			return;
 					Intent intent = new Intent();
-		
+
 		...
-		
+
 		try {
-			intent.setClass(this, Class.forName(pageName)); 
+			intent.setClass(this, Class.forName(pageName));
 		} catch (ClassNotFoundException e) {			e.printStackTrace();
 		}		startActivity(intent);
-	} 
+	}
 }		
 ```
 
@@ -406,15 +406,15 @@ public class BaseActivity extends Activity {
 
 类型 | 是否支持序列化
 :---- | :------------
- 简单类型 int, String, Boolean 等 | 支持 
- String[]  | 支持 
- Boolean[]  | 支持 
- int[]  | 支持 
- String[][]  | 支持 
- int[][]  | 支持 
- ArrayList  | 支持 
- Calendar  | 支持 
- JSONObject  | 不支持 
+ 简单类型 int, String, Boolean 等 | 支持
+ String[]  | 支持
+ Boolean[]  | 支持
+ int[]  | 支持
+ String[][]  | 支持
+ int[][]  | 支持
+ ArrayList  | 支持
+ Calendar  | 支持
+ JSONObject  | 不支持
  JSONArray   | 不支持
   HashMap<String, Objeject> | 因为 Object 可能是不支持序列化的 JSONObject 类型，所以HashMap<String, Object> 不一定支持序列化
   ArrayList<HashMap<String, Object>> | 因为 Object 可能是不支持序列化的 JSONObject 类型，所以 ArrayList<HashMap<String, Object>> 不一定支持序列化
@@ -444,11 +444,11 @@ SharedPreferences 是全局变量序列化到本地的另一种形式
 
 * Activity: 以Activity作为后缀，比如 PersonActivity
 * Adapter: 以Adapter作为后缀，比如 PersonAdapter
-* Entity: 以Entity作为后缀，比如 PersonEntity 
+* Entity: 以Entity作为后缀，比如 PersonEntity
 
 **资源文件命名规范：**
 
-* layout 
+* layout
 	- 页面布局文件： `act_`为前缀，以Activity所在的 Package 为中缀，以Activity的名称(去掉Activity)作为后缀。都是小写。比如 act_person_customer.xml
 	- ListView中的item布局文件：`item_`为前缀，ListView控件名称为后缀。 比如控件名称lvUserList时item_lv_user_list.xml
 	- Dialog布局文件：`dlg_` + 名称
@@ -461,7 +461,7 @@ SharedPreferences 是全局变量序列化到本地的另一种形式
 
 控件类型缩写 + 控件的逻辑名称（首字母大写）  比如登录按钮：btnLogin
 
-控 件 | 缩写 
+控 件 | 缩写
 ---- | ---
 LayoutView | lv
 RelativeView | rv
@@ -524,9 +524,7 @@ common_
 
 #### 统一代码格式
 
-Android源码中包含了一份 android-formatting.xml, 专门用于统一代码格式。 
+Android源码中包含了一份 android-formatting.xml, 专门用于统一代码格式。
 导入 IDE后，使用快捷键，就可以调整代码格式
 
-自动检查工具 checkstyle 
-
-
+自动检查工具 checkstyle

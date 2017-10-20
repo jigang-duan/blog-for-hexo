@@ -2,22 +2,22 @@
 title: PlantUML
 date: 2017-10-17 14:34:26
 tags:
-	- PlantUML
-	- Atom
-	- idea
-	- uml
+- PlantUML
+- Atom
+- idea
+- uml
 ---
 
 > PlantUML是一个开源项目，支持快速绘制：
-> 
-> * `时序图` Sequence diagram 
-> * `用例图` Usecase diagram 
-> * `类图` Class diagram 
-> * `活动图` Activity diagram 
-> * `组件图` Component diagram 
-> * `状态图` State diagram 
+>
+> * `时序图` Sequence diagram
+> * `用例图` Usecase diagram
+> * `类图` Class diagram
+> * `活动图` Activity diagram
+> * `组件图` Component diagram
+> * `状态图` State diagram
 > * `部署图` Deployment diagram
-> * `对象图` Object diagram 
+> * `对象图` Object diagram
 > * `线框图形界面` wireframe graphical interface
 > * `时序图` Timing Diagram
 
@@ -122,10 +122,10 @@ plantuml.jar 可以通过[PlantUML官网下载](http://zh.plantuml.com/download.
 * 设置 plantuml-preview 的 plantuml.jar
 
 	![plantuml.jar](http://oxwfu3w0v.bkt.clouddn.com/2017/10/17/atom_plantuml_open_preview_jar.png)
-	
+
 * 对应的UML图如下所示
-	
-	![ok](http://oxwfu3w0v.bkt.clouddn.com/2017/10/17/atom_plantuml_open_preview_ok.png)	
+
+	![ok](http://oxwfu3w0v.bkt.clouddn.com/2017/10/17/atom_plantuml_open_preview_ok.png)
 
 #### 在IDE中使用
 
