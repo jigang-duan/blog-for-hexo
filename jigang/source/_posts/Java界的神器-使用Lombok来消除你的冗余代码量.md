@@ -10,6 +10,8 @@ tags:
 
 他是一个通过注解方式来减少你的POJO类的getter和setter等方法的一个工具，我这里演示的在Android Studio中的使用方式，当然如果你使用的是idea那么这方法也通用，如果你用的是eclipse，那么[官网](https://projectlombok.org/)也有视频教程，我这里就不演示了
 
+<!-- more -->
+
 ## 安装依赖
 
 众所周知在在Android Studio中添加依赖有直接下载jar包和使用cradle的dependencies方法，我们这里直接使用dependencies方法

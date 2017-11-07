@@ -8,6 +8,8 @@ tags:
 ## 关于Markdown
 Markdown是一个 Web 上使用的文本到HTML的转换工具，可以通过简单、易读易写的文本格式生成结构化的HTML文档。
 
+<!-- more -->
+
 ## Markdown简单语法
 主要分为区块元素和区段元素。
 ### 区块元素

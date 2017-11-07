@@ -1,5 +1,5 @@
 ---
-title: '《App研发录》笔记:第一部分 高效App框架设计与重构'
+title: 'App研发录 笔记(一): 高效App框架设计与重构'
 date: 2017-10-20 16:11:59
 tags:
 - App研发录
@@ -7,13 +7,16 @@ tags:
 - App
 - Android
 categories:
-- 'App研发录 笔记'
+- 读书笔记
 
 ---
 
 ![App研发录](https://img3.doubanio.com/lpic/s28333166.jpg)
 
-## 第一部分 高效App框架设计与重构 ###
+第一部分 高效App框架设计与重构
+=====
+
+<!-- more -->
 
 ### 第1章 重构 ####
 

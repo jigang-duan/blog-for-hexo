@@ -20,6 +20,8 @@ categories: TCLMOVE
 * CocoPod
 * ...
 
+<!-- more -->
+
 #### 编程语言选择
 
 * Swift

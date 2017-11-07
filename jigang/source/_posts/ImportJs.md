@@ -11,10 +11,12 @@ tags:
 
 **impress.js** 是一个**Javascript程序包**，它的功能是让你制作出令人眩目的内容展示效果，主要里利用了CSS 3D Transforms 里的旋转，扭曲，缩放等特性。简言之，**代替ppt**。
 
+![kxg](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/impressjs.png)
+
 [![kxg](http://oxwfu3w0v.bkt.clouddn.com/2017/10/16/timg.gif)](/slideshow/)
 
 
-
+<!-- more -->
 
 ----
 文档:

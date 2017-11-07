@@ -8,6 +8,10 @@ tags:
 - uml
 ---
 
+![plantuml](http://s.plantuml.com/logoc.png)
+
+<!-- more -->
+
 > PlantUML是一个开源项目，支持快速绘制：
 >
 > * `时序图` Sequence diagram
