@@ -142,7 +142,7 @@ Moya的一些特色功能:
 
 #### Kingfisher
 
-Kingfisher是一个轻量级的、纯Swift的库，用于从web上下载和缓存图像。这个项目深受流行的SDWebImage的启发。
+[Kingfisher](https://github.com/onevcat/Kingfisher)是一个轻量级的、纯Swift的库，用于从web上下载和缓存图像。这个项目深受流行的SDWebImage的启发。
 
 特性:
 
