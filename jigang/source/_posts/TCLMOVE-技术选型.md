@@ -85,6 +85,11 @@ RxSwift是Swift函数响应式编程的一个开源库，由Github的ReactiveX�
 
 [R.Swfit](https://github.com/mac-cain13/R.swift) 在Swift项目中自动生成资源（像图片，字体，转场）相关的强类型变量，可以优雅的获取资源，仿Android资源文件使用的方法。
 
+相关资源：
+
+* [Swift-颜色设置技巧和(.clr)文件的创建和使用](http://blog.csdn.net/mazy_ma/article/details/73024576)
+* [Sip：做屏幕取色没人比我强](https://www.waerfa.com/sip-color-picker)
+
 #### Moya+Alamofire+ObjectMapper
 
 
