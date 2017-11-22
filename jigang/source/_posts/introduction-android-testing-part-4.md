@@ -108,7 +108,6 @@ categories:
     	}
 	}
 	```
-	
 	在view中，有4种方法，`showSearchResults()`、`showLoading()`、`hideLoading()`、`showError()`。
 在presenter中，有一个名为`search()`的方法。
 
@@ -136,7 +135,6 @@ categories:
  
 	}
 	```
-	
 	在这里，presenter扩展了`BasePresenter`，并实现了第3步中定义的`UserSearchContract.Presenter`契约。该类将实现`search()`方法。
 	
 	在尝试进行单元测试时，使用构造函数注入可以轻松地模拟`UserRepository`。schedulers也被注入到构造函数中，因为单元测试总是使用`Schedulers.immediate()`，但是在视图中，我们将使用不同的线程。
@@ -168,7 +166,6 @@ categories:
         }));
     }
 	```
-	
 	首先，运行checkViewAttached()，如果在方法开始运行时没有附加视图，它将抛出一个异常。
 然后告诉视图，它应该通过调用showLoading()开始加载。
 创建`userRepository.searchUsers()`的订阅。
@@ -254,7 +251,6 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
     	}
 	}
 	```
-	
 	通过创建`UserRepository`和`UserSearchContract.View`的模拟实例，我们将确保我们只是在测试`UserSearchPresenter`。
 在`setUp()`方法中,我们称之为`MockitoAnnotations.initMocks()`。
 然后使用模拟对象和即时调度程序创建搜索演示程序。
@@ -294,7 +290,6 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
         return new User(USER_LOGIN_2_REBECCA, "Rebecca Franks", "avatar_url2", "Bio2");
     }
 	```
-	
 	这个测试断言:假定(**Given**)用户repository返回一组用户，当(**when**)在演示程序中调用search()时，将(**then**)调用`showLoading()`和`showSearchResults()`。这个测试还断言`showError()`方法永远不会被调用。
 	
 1. 下一个测试是在UserRepository抛出错误时测试负面场景的测试。
@@ -313,7 +308,6 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
         verify(view).showError(errorMsg);
     }
 	```
-	
 	这个测试正在测试以下内容:假定(**Given**) `userRepository`返回一个异常，在调用`search()`时，应该调用`showError()`。
 	
 1. 我们将添加的最后一个测试将断言，如果视图没有附加，将抛出一个异常。
@@ -329,11 +323,10 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
         verify(view, never()).showSearchResults(anyList());
     }
 	```
-	
 1. 让我们运行测试，看看我们有多少测试覆盖率。右键单击测试名称并单击“*Run tests with coverage*”。
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/08/Screen-Shot-2016-08-08-at-8.00.29-PM.png?resize=768%2C109&ssl=1)
 	
-我们对UserSearchPresenter有100%的覆盖率！耶!
+	我们对UserSearchPresenter有100%的覆盖率！耶!
 
 下一篇博客文章将讨论创建视图和为视图编写测试。

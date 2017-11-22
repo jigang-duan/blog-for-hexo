@@ -91,7 +91,6 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
     	}
 	}
 	```
-	
 	Prod注射类:
 	
 	```java
@@ -135,7 +134,6 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
     	}
 	}
 	```
-	
 1. 	从模拟服务返回的数据依赖于您的特定需求。
 下面是我`MockGithubUserRestServiceImpl`的实现:
 
@@ -170,7 +168,6 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
     	}
 	}
 	```
-	
 	在这种情况下，我只是返回一些虚构的数据。让我们运行这个应用的模拟版本，无论你搜索什么，我们都应该得到相同的结果。
 	
 	![](https://i1.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/gif-dummydata.gif?resize=480%2C854&ssl=1)
@@ -230,7 +227,6 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
     	}
 	}
 	```
-	
 	`@Rule` `ActivityTestRule`指定该测试将使用哪个activity。
 在这种情况下，这个测试将使用`UserSearchActivity`运行。
 这将自动启动`UserSearchActivity`。
@@ -258,7 +254,6 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
         onView(withText("riggaroo2 - Rebecca's Alter Ego")).check(matches(isDisplayed()));
     }
 	```
-	
 	输入到`SearchView`并按enter键后，我们断言假的结果会显示在UI上。
 	
 1. 	我们现在已经为积极的场景编写了测试，我们也应该为这个消极的情况添加一个测试。
@@ -279,7 +274,6 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
         return Observable.just(new UsersList(usersList));
     }
 	```
-	
 	在上面的代码中，创建了一个方法，目的是为搜索结果设置一个可观察的虚拟数据。
 当`searchGithubUsers`()被调用时，该可观察的值将被返回。
 
@@ -299,7 +293,6 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
  
     }
 	```
-	
 	在这个测试中，我们首先确保服务将返回一个异常。然后，我们断言错误消息将显示在UI上。
 	
 1. 	让我们运行测试:
@@ -325,7 +318,6 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
         }
     }
 	```
-	
 1. 运行任务createMockDebugCoverageReport。你将在这里找到HTML报告所在地:app/build/reports/coverage/mock/debug/index.html。
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/Screen-Shot-2016-09-08-at-9.22.55-PM.png?ssl=1)

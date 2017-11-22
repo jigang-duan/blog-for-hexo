@@ -94,7 +94,6 @@ interface UserSearchContract {
     }
 	}
 	```
-	
 	在`onCreate()`中，创建presenter对象。
 提供在注入类中定义的User repo。
 通过`io()`调度器和`AndroidSchedulers.mainThread()`调度器,RxJava订阅他们应该知道哪个线程上执行他们的工作。
@@ -181,7 +180,6 @@ interface UserSearchContract {
  
 	</android.support.constraint.ConstraintLayout>
 	```
-	
 1. 	我们还需要向工具栏添加一个SearchView，这样我们就可以在某个地方输入。
 添加一个menu_user_search.xml文件到菜单资源文件夹。
 在它里面，你需要添加一个SearchView:
@@ -198,7 +196,6 @@ interface UserSearchContract {
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu>
 	```
-	
 1. 	我们需要创建一个布局，该布局将用于RecyclerView中的每个条目。
 布局文件夹中创建一个名为list_item_user.xml的文件。
 我用ConstraintLayout包含一个ImageView和两个textview。
@@ -254,7 +251,6 @@ interface UserSearchContract {
         tools:text="JHB, South Africa. Lots of code, lots and lots and lots of code."/>
 </android.support.constraint.ConstraintLayout>
 	```
-	
 1. 	现在，我们已经有了所需的所有布局，让我们将XML与Activity联系起来。
 首先，在onCreate()中，我们将获得对我们需要的视图的引用。
 
@@ -280,7 +276,6 @@ interface UserSearchContract {
  
     }
 	```
-	
 1. 我们需要将SearchView连接到我们的activity中，以使它触发presenters `search()`方法。
 在`onCreateOptionsMenu()`中，添加以下代码:
 
@@ -312,7 +307,6 @@ interface UserSearchContract {
         return true;
     }
 	```
-	
 	这将使正确的菜单inflate，找到搜索视图并设置一个查询文本侦听器。
 在这种情况下，只有当有人按下键盘上的提交时，我们才会以查询的方式调用搜索提供器。
 我们也可以在`onQueryTextChange`中完成，但是由于在Github API上的限制，我将坚持`onQueryTextSubmit`。
@@ -350,7 +344,6 @@ interface UserSearchContract {
  
     }
 	```
-	
 	我们基本上只是在这里切换视图的可见性，并将usersAdapter设置为服务返回的新items。
 	
 1. 	为了完整起见，这里是`UserSearchAdapter`类，它用于`activity`的`RecyclerView`:
@@ -412,7 +405,6 @@ interface UserSearchContract {
     	}
 	}
 	```
-	
 	注射类
 	
 	```java
@@ -457,7 +449,6 @@ interface UserSearchContract {
     }
 	}
 	```
-	
 1. 	现在，如果你运行这款应用，你应该能够在Github上搜索用户名，并查看结果。
 
 	![](https://i2.wp.com/riggaroo.co.za/wp-content/uploads/2016/08/github_user_search.gif?resize=480%2C854&ssl=1)

@@ -310,7 +310,6 @@ Mockito帮助我们实现这一分离
         return user;
     }
 	```
-	
 	这个测试分为三个部分: 给定(given)，什么时候(when)，什么时候(then)。
 	我将我的测试分离开来，因为它确保您的测试是结构化的，并让您思考您正在测试的特定功能。
 	在这个测试中，我正在测试以下内容:给定Github服务返回某些用户时，当我搜索用户时，结果应该返回并正确地转换。
@@ -349,7 +348,6 @@ Mockito帮助我们实现这一分离
         verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
 	```
-	
 	在这个测试中，我们断言githubUserRestService被调用两次，而其他的网络调用一次被调用一次。我们还断言订阅者没有终止错误。
 	
 ## UserRepositoryImpl的最终单元测试代码
@@ -516,6 +514,6 @@ public class UserRepositoryImplTest {
 1. 然后你会看到结果出现在Android Studio的右边。
 ![](https://i2.wp.com/riggaroo.co.za/wp-content/uploads/2016/07/Code-Coverage-Report-Unit-test-Android-Studio.png?resize=768%2C214&ssl=1)
 
-我们在UserRepositoryImpl上有100%的单元测试覆盖率。耶!
+	我们在UserRepositoryImpl上有100%的单元测试覆盖率。耶!
 
 在下一篇博客文章中，我们将讨论实现UI以显示搜索结果集并为其编写更多的测试。
