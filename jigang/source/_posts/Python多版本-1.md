@@ -4,7 +4,7 @@ date: 2017-07-15 15:47:10
 tags:
 - python
 categories:
-- python
+- 包管理器
 
 ---
 
@@ -232,21 +232,21 @@ conda的一些常用操作如下：
 ```bash
 # 查看当前环境下已安装的包
 conda list
- 
+
 # 查看某个指定环境的已安装包
 conda list -n python34
- 
+
 # 查找package信息
 conda search numpy
- 
+
 # 安装package
 conda install -n python34 numpy
 # 如果不用-n指定环境名称，则被安装在当前活跃环境
 # 也可以通过-c指定通过某个channel安装
- 
+
 # 更新package
 conda update -n python34 numpy
- 
+
 # 删除package
 conda remove -n python34 numpy
 ```
@@ -256,10 +256,10 @@ conda将conda、python等都视为package，因此，完全可以使用conda来�
 ```bash
 # 更新conda，保持conda最新
 conda update conda
- 
+
 # 更新anaconda
 conda update anaconda
- 
+
 # 更新python
 conda update python
 # 假设当前环境是python 3.4, conda会将python升级为3.4.x系列的当前最新版本
@@ -272,7 +272,7 @@ conda update python
 ```bash
 # 在当前环境下安装anaconda包集合
 conda install anaconda
- 
+
 # 结合创建环境的命令，以上操作可以合并为
 conda create -n python34 python=3.4 anaconda
 # 也可以不用全部安装，根据需求安装自己需要的package即可
@@ -291,4 +291,3 @@ conda env export > environment.yaml
 ```bash
 conda env create -f environment.yaml
 ```
-

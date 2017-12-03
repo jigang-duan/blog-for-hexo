@@ -5,7 +5,7 @@ tags:
 - iOS
 - CocoaPods
 categories:
-- iOS
+- 包管理器
 
 ---
 
