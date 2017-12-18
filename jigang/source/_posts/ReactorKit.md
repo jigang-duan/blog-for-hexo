@@ -4,8 +4,9 @@ date: 2017-11-09 18:40:18
 tags:
 - iOS
 - swift
-categories:
 - iOS第三方库
+categories:
+- iOS
 
 ---
 
@@ -231,7 +232,7 @@ final class UserService: Service, UserServiceType {
   func user(id: Int) -> Observable<User> {
     return foo()
   }
-  
+
   func follow(id: Int) -> Observable<Void> {
     return bar()
   }
@@ -424,10 +425,3 @@ class MyView: UIView, View {
 * [Cleverbot](https://github.com/devxoul/Cleverbot): 使用Cleverbot和ReactorKit的iOS消息应用
 * [Drrrible](https://github.com/devxoul/Drrrible): Dribbble iOS使用ReactorKit(App Store)对
 * [Passcode](https://github.com/cruisediary/Passcode):iOS RxSwift、ReactorKit和IGListKit示例的Passcode
-
-
-
-
-
-
-

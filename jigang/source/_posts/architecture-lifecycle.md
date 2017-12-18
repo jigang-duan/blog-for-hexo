@@ -2,10 +2,10 @@
 title: Android 架构组件 - 使用Lifecycle组件来处理生命周期
 date: 2017-11-08 16:50:06
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

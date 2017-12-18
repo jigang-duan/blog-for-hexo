@@ -5,7 +5,7 @@ tags:
 - Android
 - ADB
 categories:
-- ADB
+- Android
 
 ---
 
@@ -610,7 +610,7 @@ adb pull /sdcard/demo.mp4
 ```
 
 > 注意:按下Ctrl-C停止屏幕记录，否则记录在三分钟内自动停止，或按时间限制设定的时间限制。
- 
+
 ```
 adb shell screenrecord --size <WIDTHxHEIGHT>
 ```

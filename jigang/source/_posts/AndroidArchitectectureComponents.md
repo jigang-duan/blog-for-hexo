@@ -2,10 +2,10 @@
 title: Android 架构组件简介
 date: 2017-11-08 09:35:45
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

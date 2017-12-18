@@ -4,8 +4,9 @@ date: 2017-08-10 19:41:39
 tags:
 - Android
 - UI
-categories:
 - 'Android 用户界面的最佳实践'
+categories:
+- Android
 
 ---
 
@@ -48,18 +49,18 @@ Android框架有大量的[View](https://developer.android.google.cn/reference/an
 * [创建自定义视图类](/2017/08/10/custom-views/)
 
 	创建一个类似内置视图的类，带有自定义属性和支持Android Studio布局编辑器。
-	
+
 * [实现自定义绘制](/2017/08/13/custom-views-custom-drawing/)
-	
+
 	使用Android图形系统使你的视图具有视觉上的与众不同。
-	
+
 * [视图交互](/2017/08/13/custom-views-making-interactive/)
-	
+
 	用户希望视图能够平稳、自然地响应输入手势。
 这个课程将讨论如何使用手势检测、物理和动画来给用户界面提供专业的感觉。
-	
+
 * [优化视图](/2017/08/13/custom-views-optimizing-view/)
-	
+
 	不管你的UI有多漂亮，用户都不会喜欢它，如果它不以一贯的高帧率运行的话。
 学习如何避免常见的性能问题，以及如何使用硬件加速使您的自定义图形运行得更快。
 
@@ -99,4 +100,3 @@ Android框架有大量的[View](https://developer.android.google.cn/reference/an
 * 保持兼容性
 * 使用调色板API选择颜色
 * 使用设计支持库
-

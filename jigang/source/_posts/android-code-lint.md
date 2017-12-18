@@ -2,10 +2,10 @@
 title: android 代码优化 - 注解检查
 date: 2017-10-10 14:16:32
 tags:
-- Android
+- Android优化
 - Java
 categories:
-- Android优化
+- Android
 
 ---
 
@@ -31,16 +31,16 @@ categories:
 | ColorRes | 👌 | 👌  | 👌 | ❌ | ❌ | 颜色资源引用 | android.R.color.black |
 | DimenRes | 👌 | 👌  | 👌 | ❌ | ❌ | 尺寸资源引用 | android.R.dimen.app_icon_size |
 | DrawableRes | 👌 | 👌  | 👌 | ❌ | ❌ | Drawable资源引用 | android.R.attr.alertDialogIcon |
-| FontRes | 👌 | 👌  | 👌 | ❌ | ❌ | 字体资源引用 | R.font.myfont | 
-| StringRes | 👌 | 👌  | 👌 | ❌ | ❌ | String资源引用 | android.R.string.ok | 
-| StyleableRes | 👌 | 👌  | 👌 | ❌ | ❌ | styleable资源引用 | android.R.styleable.TextView_text | 
-| StyleRes | 👌 | 👌  | 👌 | ❌ | ❌ | style资源引用 | android.R.style.TextAppearance | 
-| TransitionRes | 👌 | 👌  | 👌 | ❌ | ❌ | transition资源引用 | -| 
-| LayoutRes | 👌 | 👌  | 👌 | ❌ | ❌ | 布局资源引用 | android.R.layout.list_content | 
-| MenuRes | 👌 | 👌  | 👌 | ❌ | ❌ | 菜单资源引用 | - | 
-| NavigationRes | 👌 | 👌  | 👌 | ❌ | ❌ | 导航资源引用 | R.navigation.flow | 
-| PluralsRes | 👌 | 👌  | 👌 | ❌ | ❌ | 复数的资源引用 | - | 
-| RawRes | 👌 | 👌  | 👌 | ❌ | ❌ | raw资源引用 | - | 
+| FontRes | 👌 | 👌  | 👌 | ❌ | ❌ | 字体资源引用 | R.font.myfont |
+| StringRes | 👌 | 👌  | 👌 | ❌ | ❌ | String资源引用 | android.R.string.ok |
+| StyleableRes | 👌 | 👌  | 👌 | ❌ | ❌ | styleable资源引用 | android.R.styleable.TextView_text |
+| StyleRes | 👌 | 👌  | 👌 | ❌ | ❌ | style资源引用 | android.R.style.TextAppearance |
+| TransitionRes | 👌 | 👌  | 👌 | ❌ | ❌ | transition资源引用 | -|
+| LayoutRes | 👌 | 👌  | 👌 | ❌ | ❌ | 布局资源引用 | android.R.layout.list_content |
+| MenuRes | 👌 | 👌  | 👌 | ❌ | ❌ | 菜单资源引用 | - |
+| NavigationRes | 👌 | 👌  | 👌 | ❌ | ❌ | 导航资源引用 | R.navigation.flow |
+| PluralsRes | 👌 | 👌  | 👌 | ❌ | ❌ | 复数的资源引用 | - |
+| RawRes | 👌 | 👌  | 👌 | ❌ | ❌ | raw资源引用 | - |
 | XmlRes | 👌 | 👌  | 👌 | ❌ | ❌ | XML资源引用 | - |
 
 
@@ -51,7 +51,7 @@ categories:
 | ColorInt | 👌 | 👌  | 👌 | ❌ | ❌ | 填充色的int，AARRGGBB |
 | ColorLong | 👌 | 👌  | 👌 | ❌ | ❌ | 填充[Color](https://developer.android.google.cn/reference/android/graphics/Color.html)的long |
 | Dimension | 👌 | 👌  | 👌 | ❌ | ❌ | 表示一个尺寸 |
-| Px | 👌 | 👌  | 👌 | ❌ | ❌ | 表示一个像素维度 | 
+| Px | 👌 | 👌  | 👌 | ❌ | ❌ | 表示一个像素维度 |
 
 **线程相关注解**：
 
@@ -89,8 +89,8 @@ public float getAlpha() {
 
 | 注释  | 参数  | 字段 | 方法返回值 | 方法 | 类 |描述 |
 |:------ |:---------:| :--------:| :--------:|:--------:| :-------:| :------- |
-| NonNull | 👌 | 👌  | 👌 | ❌ | ❌ | 永远不能为空 | 
-| Nullable | 👌 | 👌  | 👌 | ❌ | ❌ | 可以为null | 
+| NonNull | 👌 | 👌  | 👌 | ❌ | ❌ | 永远不能为空 |
+| Nullable | 👌 | 👌  | 👌 | ❌ | ❌ | 可以为null |
 
 
 **权限相关注解**：
@@ -119,7 +119,7 @@ public float getAlpha() {
 
 | 注释  | 参数  | 字段 | 方法返回值 | 方法 | 类 |描述 |
 |:------ |:---------:| :--------:| :--------:|:--------:| :-------:| :------- |
-| StringDef | 👌 | 👌  | 👌 | ❌ | ❌ | 表示一个逻辑类型，它的值应该是一个显式命名的常量 | 
+| StringDef | 👌 | 👌  | 👌 | ❌ | ❌ | 表示一个逻辑类型，它的值应该是一个显式命名的常量 |
 
 ```java
 @Retention(SOURCE)
@@ -138,7 +138,7 @@ public float getAlpha() {
 
 | 注释  | 参数  | 字段 | 方法返回值 | 方法 | 类 |描述 |
 |:------ |:---------:| :--------:| :--------:|:--------:| :-------:| :------- |
-| Size | 👌 | ❌  | 👌 | ❌ | ❌ | 复数的资源引用,用于数组或集合，指定大小或长度 | 
+| Size | 👌 | ❌  | 👌 | ❌ | ❌ | 复数的资源引用,用于数组或集合，指定大小或长度 |
 
 ```java
 public void getLocationInWindow(@Size(2) int[] location) {
@@ -157,9 +157,9 @@ public @CheckResult String trim(String s) { return s.trim(); }
   ...
   s.trim(); // this is probably an error
   s = s.trim(); // ok
- 
- 
- // CheckResult(suggest) 
+
+
+ // CheckResult(suggest)
  @CheckResult(suggest="#redirectErrorStream(boolean)")
  public boolean redirectErrorStream() { ... }
 ```

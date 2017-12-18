@@ -4,8 +4,9 @@ date: 2017-11-17 17:29:12
 tags:
 - Android
 - 自动化测试
-categories:
 - Android自动化测试
+categories:
+- Android
 
 ---
 
@@ -48,7 +49,7 @@ UI测试或交互测试模拟典型的用户与您的应用程序的交互。
 
 用于执行此测试的工具：
 
-* [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/)  - 用于在你的应用中进行测试，选择项目，确保某些东西是可见的。 
+* [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/)  - 用于在你的应用中进行测试，选择项目，确保某些东西是可见的。
 * [UIAutomator](https://developer.android.google.cn/training/testing/ui-testing/uiautomator-testing.html)  - 用于测试不同应用之间的交互。
 
 还有其他工具可用于此类测试，如  [Robotium](http://robotium.com/)，  [Appium](http://appium.io/)，  [Calabash](http://calaba.sh/)，  [Robolectric](http://robolectric.org/)。

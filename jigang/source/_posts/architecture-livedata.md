@@ -2,10 +2,10 @@
 title: Android 架构组件 - LiveData
 date: 2017-11-08 18:47:44
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 
@@ -50,20 +50,20 @@ LiveData只会通知活动的观察者关于更新的信息。
 	如果观察者的生命周期是不活跃的，例如在后台堆栈中的activity，那么它就不会接收任何LiveData事件。
 
 * **不用手动处理生命周期**
-	
+
 	UI组件只是观察相关数据，不用停止或恢复观察。
 LiveData自动管理所有这些，因为它在观察时知道相关的生命周期状态变化。
 
 * **一直到最新数据**
-	
+
 	如果一个生命周期变得不活跃，再次活跃它就会接收到最新的数据。例如，一个在后台的activity在它返回到前台后接收到最新的数据
 
 * **适当的配置更改**
-	
+
 	如果一个activity或fragment由于配置更改而被重新创建，比如设备旋转，它会立即接收到最新可用的数据。
 
 * **共享资源**
-	
+
 	您可以使用singleton模式扩展一个LiveData对象，以包装系统服务，这样它们就可以在您的应用程序中共享。
 LiveData对象连接到系统服务一次，然后任何需要资源的观察者都可以看到LiveData对象。
 要了解更多信息，请参阅[扩展LiveData](#extend_livedata)。
@@ -115,7 +115,7 @@ private MutableLiveData<String> mCurrentName;
 最初，`LiveData`对象中的数据没有设置。
 
 > 注意:确保存储LiveData对象在ViewModel对象中更新UI，而不是activity或fragment，原因如下:
-> 
+>
 * 避免膨胀的活动和碎片。现在，这些UI控制器负责显示数据，而不是保存数据状态。
 * 将LiveData实例与特定活动或片段实例分离，并允许LiveData对象在配置更改中存活。
 
@@ -324,14 +324,14 @@ public class MyFragment extends Fragment {
 * [Transformations.map()](https://developer.android.google.cn/reference/android/arch/lifecycle/Transformations.html#map(android.arch.lifecycle.LiveData<X>,%20android.arch.core.util.Function<X,%20Y>))
 
 	对存储在LiveData对象中的值应用一个函数，并将结果传播到下游。
-	
+
 	```java
 	LiveData<User> userLiveData = ...;
 	LiveData<String> userName = Transformations.map(userLiveData, user -> {
     	user.name + " " + user.lastName
 	});
 	```
-	
+
 * [Transformations.switchMap()](https://developer.android.google.cn/reference/android/arch/lifecycle/Transformations.html#switchMap(android.arch.lifecycle.LiveData<X>,%20android.arch.core.util.Function<X,%20android.arch.lifecycle.LiveData<Y>>))
 
 	与map()类似，将一个函数应用到LiveData对象中存储的值，并将结果发送到下游。
@@ -345,7 +345,7 @@ public class MyFragment extends Fragment {
 	LiveData<String> userId = ...;
 	LiveData<User> user = Transformations.switchMap(userId, id -> getUser(id) );
 	```
-	
+
 您可以使用转换方法在观察者的生命周期中携带信息。
 除非观察者在观察返回的LiveData对象，否则这些转换不会被计算。
 因为`转换是惰性地计算的`，所以与生命周期相关的行为在不需要额外的显式调用或依赖项的情况下被隐式地传递下去。

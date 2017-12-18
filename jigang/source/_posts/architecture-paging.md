@@ -2,10 +2,10 @@
 title: Android 架构组件 - 分页库
 date: 2017-11-09 14:45:09
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

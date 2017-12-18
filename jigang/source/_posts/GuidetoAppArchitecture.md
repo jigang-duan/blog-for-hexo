@@ -2,10 +2,10 @@
 title: Android 架构组件指南
 date: 2017-11-08 11:23:22
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

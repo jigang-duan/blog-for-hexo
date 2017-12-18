@@ -6,7 +6,7 @@ tags:
 - Java
 - 'Browser Plugin'
 categories:
-- 'Android Browser Plugin'
+- Android
 
 ---
 

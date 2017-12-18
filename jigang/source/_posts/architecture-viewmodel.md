@@ -2,10 +2,10 @@
 title: Android 架构组件 - ViewModel
 date: 2017-11-09 11:26:10
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

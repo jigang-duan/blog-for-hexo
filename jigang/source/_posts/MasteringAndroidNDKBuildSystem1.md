@@ -6,7 +6,7 @@ tags:
 - NDK
 - 翻译
 categories:
-- Android NDK
+- Android
 
 ---
 
@@ -160,7 +160,7 @@ include $(BUILD_EXECUTABLE) # 告诉ndk-build，我们想要构建一个本地�
 **_ Application.mk_**
 
 ```makefile
-APP_OPTIM := debug    # 在调试模式下构建目标. 
+APP_OPTIM := debug    # 在调试模式下构建目标.
 APP_ABI := armeabi-v7a # 将目标架构定义为ARM.
 APP_STL := stlport_static # 我们使用stlport作为标准的c/c++库.
 APP_CPPFLAGS := -frtti -fexceptions    # 这是你启用异常的地方.
@@ -267,7 +267,7 @@ include $(BUILD_EXECUTABLE)
 ```makefile
 APP_OPTIM := debug
 APP_ABI := armeabi-v7a
-APP_STL := stlport_static 
+APP_STL := stlport_static
 APP_CPPFLAGS := -frtti -fexceptions
 APP_PLATFORM := android-19
 APP_BUILD_SCRIPT := Android.mk  # 这行是新的!
@@ -336,7 +336,7 @@ $ ndk-build NDK_APPLICATION_MK=./Application.mk
 ```makefile
 APP_OPTIM := debug
 APP_ABI := armeabi-v7a
-APP_STL := stlport_static 
+APP_STL := stlport_static
 APP_CPPFLAGS := -frtti -fexceptions
 APP_PLATFORM := android-19
 APP_BUILD_SCRIPT := MyAndroid.mk
@@ -398,7 +398,7 @@ include PATH_TO_MK_FILE/Android.mk
 ```makefile
 APP_OPTIM := debug
 APP_ABI := armeabi-v7a
-APP_STL := stlport_static 
+APP_STL := stlport_static
 APP_CPPFLAGS := -frtti -fexceptions
 APP_PLATFORM := android-19
 APP_BUILD_SCRIPT := makefiles/Android.mk
@@ -707,7 +707,7 @@ ifeq ($(TARGET_ARCH),x86)
     OPENCL_LIB := PVROCL
     OPENCL_INC_DIR    := $(OPENCL_COMMON)/include/CL12/
     OPENCL_LIB_DIR    := $(OPENCL_COMMON)/libs/$(GPU_FAMILY)_$(TARGET_ARCH)/
-    LOCAL_LDLIBS    := -llog  -L$(OPENCL_LIB_DIR) -l$(OPENCL_LIB) 
+    LOCAL_LDLIBS    := -llog  -L$(OPENCL_LIB_DIR) -l$(OPENCL_LIB)
     MYMODULE_NAME:=mymodule_$(GPU_FAMILY)
     include OTHER_MK_FILES.mk
 endif
@@ -718,7 +718,7 @@ ifeq ($(TARGET_ARCH),arm)
     OPENCL_LIB := OpenCL
     OPENCL_INC_DIR    := $(OPENCL_COMMON)/include/CL12/
     OPENCL_LIB_DIR    := $(OPENCL_COMMON)/libs/$(GPU_FAMILY)_$(TARGET_ARCH)/
-    LOCAL_LDLIBS    := -llog  -L$(OPENCL_LIB_DIR) -l$(OPENCL_LIB) 
+    LOCAL_LDLIBS    := -llog  -L$(OPENCL_LIB_DIR) -l$(OPENCL_LIB)
     MYMODULE_NAME:=mymodule_$(GPU_FAMILY)
     include OTHER_MK_FILES.mk
 
@@ -727,7 +727,7 @@ ifeq ($(TARGET_ARCH),arm)
     OPENCL_LIB := GLES_mali
     OPENCL_INC_DIR    := $(OPENCL_COMMON)/include/CL11/
     OPENCL_LIB_DIR    := $(OPENCL_COMMON)/libs/$(GPU_FAMILY)_$(TARGET_ARCH)/
-    LOCAL_LDLIBS    := -llog  -L$(OPENCL_LIB_DIR) -l$(OPENCL_LIB) 
+    LOCAL_LDLIBS    := -llog  -L$(OPENCL_LIB_DIR) -l$(OPENCL_LIB)
     MYMODULE_NAME:=mymodule_$(GPU_FAMILY)
     include OTHER_MK_FILES.mk
 endif
@@ -753,7 +753,7 @@ endif
 如果APK安装在x86设备上，那么唯一的x86库将被安装，并在应用程序执行时自动加载。
 
 > 当然，您需要在JAVA代码中调用`System.loadLibrary()`函数，或者使用`dlopen()`和`dlsym()`函数在本机代码中动态地链接共享库，但是一旦我们获得了以上的库，加载正确库的工作量就变得微不足道了。
-  
+
 ## <a name="summary"></a>总结
 
 在本文中，我们介绍了`ndk-build`的基础知识，接着讨论了`ndk-build`系统中的一些半隐藏特性或技术，我个人认为这非常有用。

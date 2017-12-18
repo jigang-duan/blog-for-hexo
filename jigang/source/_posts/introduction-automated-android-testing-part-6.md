@@ -4,8 +4,9 @@ date: 2017-11-20 18:31:58
 tags:
 - Android
 - 自动化测试
-categories:
 - Android自动化测试
+categories:
+- Android
 
 ---
 
@@ -54,35 +55,35 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
 1. 确保您已经切换到**mockDebug** flavor。
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/Screen-Shot-2016-09-02-at-11.34.01-AM.png?ssl=1)
-	
+
 1. 	在src目录中创建一个mock文件夹。
 然后在**mock**文件夹中创建一个包，它模仿了主包名。
 使一个类称为`MockGithubUserRestServiceImpl`。
 最终的文件结构应该是这样的:
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/Screen-Shot-2016-09-02-at-11.41.31-AM.png?ssl=1)
-	
+
 1. 	创建一个**prod**目录。
 将先前定义的Injection类移动到这个文件夹中。
 我们将在**mock**文件夹中创建另一个Injection类。
 这个类将会注入被模拟的Github服务，而不是生产API。
 
 	![](https://i1.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/Screen-Shot-2016-09-02-at-12.14.31-PM.png?resize=612%2C1024&ssl=1)
-	
+
 	在Injection类位于**mock**文件夹中,我们简单地返回MockGithubUserServiceImpl创建。
 在**prod**文件夹中，我们将返回实际的更新Github服务。
 
 	Mock Injection类:
-	
+
 	```java
 	public class Injection {
- 
+
     	private static GithubUserRestService userRestService;
- 
+
     	public static UserRepository provideUserRepo() {
         	return new UserRepositoryImpl(provideGithubUserRestService());
     	}
- 
+
     	static GithubUserRestService provideGithubUserRestService() {
         	if (userRestService == null) {
             	userRestService = new MockGithubUserRestServiceImpl();
@@ -92,43 +93,43 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
 	}
 	```
 	Prod注射类:
-	
+
 	```java
 	public class Injection {
- 
+
     	private static final String BASE_URL = "https://api.github.com";
     	private static OkHttpClient okHttpClient;
     	private static GithubUserRestService userRestService;
     	private static Retrofit retrofitInstance;
- 
+
     	public static UserRepository provideUserRepo() {
         	return new UserRepositoryImpl(provideGithubUserRestService());
     	}
- 
+
     	static GithubUserRestService provideGithubUserRestService() {
         	if (userRestService == null) {
             	userRestService = getRetrofitInstance().create(GithubUserRestService.class);
         	}
         	return userRestService;
     	}
- 
+
     	static OkHttpClient getOkHttpClient() {
         	if (okHttpClient == null) {
             	HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             	logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
             	okHttpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
         	}
- 
+
         	return okHttpClient;
     	}
- 
+
     	static Retrofit getRetrofitInstance() {
         	if (retrofitInstance == null) {
             	Retrofit.Builder retrofit = new Retrofit.Builder().client(Injection.getOkHttpClient()).baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
             	retrofitInstance = retrofit.build();
- 
+
         	}
         	return retrofitInstance;
     	}
@@ -139,10 +140,10 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
 
 	```java
 	public class MockGithubUserRestServiceImpl implements GithubUserRestService {
-    
+
     	private final List<User> usersList = new ArrayList<>();
     	private User dummyUser1, dummyUser2;
- 
+
     	public MockGithubUserRestServiceImpl() {
         	dummyUser1 = new User("riggaroo", "Rebecca Franks",
                 "https://riggaroo.co.za/wp-content/uploads/2016/03/rebeccafranks_circle.png", "Android Dev");
@@ -151,12 +152,12 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
         	usersList.add(dummyUser1);
         	usersList.add(dummyUser2);
     	}
- 
+
     	@Override
     	public Observable<UsersList> searchGithubUsers(final String searchTerm) {
         	return Observable.just(new UsersList(usersList));
     	}
- 
+
     	@Override
     	public Observable<User> getUser(final String username) {
         	if (username.equals("riggaroo")) {
@@ -169,11 +170,11 @@ MockWebServer也很灵活，因为您可以给它不同的场景。
 	}
 	```
 	在这种情况下，我只是返回一些虚构的数据。让我们运行这个应用的模拟版本，无论你搜索什么，我们都应该得到相同的结果。
-	
+
 	![](https://i1.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/gif-dummydata.gif?resize=480%2C854&ssl=1)
-	
+
 	现在我们有了一个工作虚拟应用程序！我们现在可以写Espresso UI测试。
-	
+
 ## 写Espresso测试的基础
 
 在编写一个Espresso测试时，下面的公式用于在UI中执行函数:
@@ -208,15 +209,15 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
 你的项目应该是这样的:
 
 	![](https://i1.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/AndroidTestMock_folder.png?resize=768%2C703&ssl=1)
-	
+
 1. 	我们将首先编写一个基本的测试，以确保当activity启动时，文本“开始键入搜索”将显示出来:
 
 	```java
 	public class UserSearchActivityTest {
- 
+
     	@Rule
     	public ActivityTestRule<UserSearchActivity> testRule = new ActivityTestRule<>(UserSearchActivity.class);
- 
+
     	@Test
     	public void searchActivity_onLaunch_HintTextDisplayed(){
         	//Given activity automatically launched
@@ -233,19 +234,19 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
 传递额外参数将指示您是否希望该activity自动启动或不启动。
 
 	测试`searchActivity_onLaunch_HintTextDisplayed`()是非常简单的。它在视图中搜索文本，并断言文本在UI中可见
-	
+
 1. 	下一步测试稍微复杂一点:
 
 	```java
 	@Test
     public void searchText_ReturnsCorrectlyFromWebService_DisplaysResult() {
         //Given activity is automatically launched
- 
+
         //When
         onView(allOf(withId(R.id.menu_search), withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))).perform(
                 click());  // When using a SearchView, there are two views that match the id menu_search - one that represents the icon, and the other the edit text view. We want to click on the visible one.
         onView(withId(R.id.search_src_text)).perform(typeText("riggaroo"), pressKey(KeyEvent.KEYCODE_ENTER));
- 
+
         //Then
         onView(withText("Start typing to search")).check(matches(not(isDisplayed())));
         onView(withText("riggaroo - Rebecca Franks")).check(matches(isDisplayed()));
@@ -255,17 +256,17 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
     }
 	```
 	输入到`SearchView`并按enter键后，我们断言假的结果会显示在UI上。
-	
+
 1. 	我们现在已经为积极的场景编写了测试，我们也应该为这个消极的情况添加一个测试。
 我们需要调整`MockGithubUserRestServiceImpl`为了让它返回自定义错误可见如果需要。
 
 	```java
 	private static Observable dummyGithubSearchResult = null;
- 
+
     public static void setDummySearchGithubCallResult(Observable result) {
         dummyGithubSearchResult = result;
     }
-    
+
     @Override
     public Observable<UsersList> searchGithubUsers(final String searchTerm) {
         if (dummyGithubSearchResult != null) {
@@ -284,23 +285,23 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
     public void searchText_ServiceCallFails_DisplayError(){
         String errorMsg = "Server Error";
         MockGithubUserRestServiceImpl.setDummySearchGithubCallResult(Observable.error(new Exception(errorMsg)));
- 
+
         onView(allOf(withId(R.id.menu_search), withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))).perform(
                 click());  // When using a SearchView, there are two views that match the id menu_search - one that represents the icon, and the other the edit text view. We want to click on the visible one.
         onView(withId(R.id.search_src_text)).perform(typeText("riggaroo"), pressKey(KeyEvent.KEYCODE_ENTER));
- 
+
        onView(withText(errorMsg)).check(matches(isDisplayed()));
- 
+
     }
 	```
 	在这个测试中，我们首先确保服务将返回一个异常。然后，我们断言错误消息将显示在UI上。
-	
+
 1. 	让我们运行测试:
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/Passing_UI_Tests.png?resize=768%2C153&ssl=1)
-	
+
 	**他们都通过了!**
-	
+
 ## Android代码覆盖率
 
 为了了解您的测试有多有效，获得代码覆盖度量是非常棒的。
@@ -321,7 +322,7 @@ onView(withId(R.id.menu_search))      // withId(R.id.menu_search) is a ViewMatch
 1. 运行任务createMockDebugCoverageReport。你将在这里找到HTML报告所在地:app/build/reports/coverage/mock/debug/index.html。
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/09/Screen-Shot-2016-09-08-at-9.22.55-PM.png?ssl=1)
-	
+
 	Yay-我们只有模拟UI测试的82%的覆盖率。
 考虑到我们在第四篇和这篇文章中看到的覆盖率报告，它可以很好地说明我们整个应用程序的测试覆盖率。
 现在我们可以迭代地返回并尝试覆盖更多的代码区域。

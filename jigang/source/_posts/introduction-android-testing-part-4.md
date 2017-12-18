@@ -4,8 +4,9 @@ date: 2017-11-17 20:28:15
 tags:
 - Android
 - 自动化测试
-categories:
 - Android自动化测试
+categories:
+- Android
 
 ---
 
@@ -28,9 +29,9 @@ categories:
 
 	```java
 	public interface MvpPresenter<V extends MvpView> {
- 
+
     	void attachView(V mvpView);
- 
+
     	void detachView();
 	}
 	```
@@ -40,40 +41,40 @@ categories:
 
 	```java
 	public class BasePresenter<T extends MvpView> implements MvpPresenter<T> {
- 
+
     	private T view;
- 
+
     	private CompositeSubscription compositeSubscription = new CompositeSubscription();
- 
+
     	@Override
     	public void attachView(T mvpView) {
         	view = mvpView;
     	}
- 
+
     	@Override
     	public void detachView() {
         	compositeSubscription.clear();
         	view = null;
     	}
- 
+
     	public T getView() {
         	return view;
     	}
- 
+
     	public void checkViewAttached() {
         	if (!isViewAttached()) {
             	throw new MvpViewNotAttachedException();
         	}
     	}
- 
+
     	private boolean isViewAttached() {
         	return view != null;
     	}
- 
+
     	protected void addSubscription(Subscription subscription) {
         	this.compositeSubscription.add(subscription);
     	}
- 
+
     	protected static class MvpViewNotAttachedException extends RuntimeException {
         	public MvpViewNotAttachedException() {
             	super("Please call Presenter.attachView(MvpView) before" + " requesting data to the Presenter");
@@ -92,17 +93,17 @@ categories:
 
 	```java
 	interface UserSearchContract {
- 
+
     	interface View extends MvpView {
         	void showSearchResults(List<User> githubUserList);
- 
+
         	void showError(String message);
- 
+
         	void showLoading();
- 
+
         	void hideLoading();
     	}
- 
+
     	interface Presenter extends MvpPresenter<View> {
         	void search(String term);
     	}
@@ -126,19 +127,19 @@ categories:
 	class UserSearchPresenter extends BasePresenter<UserSearchContract.View> implements UserSearchContract.Presenter {
     	private final Scheduler mainScheduler, ioScheduler;
     	private UserRepository userRepository;
- 
+
     	UserSearchPresenter(UserRepository userRepository, Scheduler ioScheduler, Scheduler mainScheduler) {
         	this.userRepository = userRepository;
         	this.ioScheduler = ioScheduler;
         	this.mainScheduler = mainScheduler;
     	}
- 
+
 	}
 	```
 	在这里，presenter扩展了`BasePresenter`，并实现了第3步中定义的`UserSearchContract.Presenter`契约。该类将实现`search()`方法。
-	
+
 	在尝试进行单元测试时，使用构造函数注入可以轻松地模拟`UserRepository`。schedulers也被注入到构造函数中，因为单元测试总是使用`Schedulers.immediate()`，但是在视图中，我们将使用不同的线程。
-	
+
 1. 现在，为了实现search():
 
 	```java
@@ -149,15 +150,15 @@ categories:
         addSubscription(userRepository.searchUsers(term).subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(new Subscriber<List<User>>() {
             @Override
             public void onCompleted() {
- 
+
             }
- 
+
             @Override
             public void onError(Throwable e) {
                 getView().hideLoading();
                 getView().showError(e.getMessage()); //TODO You probably don't want this error to show to users - Might want to show a friendlier message :)
             }
- 
+
             @Override
             public void onNext(List<User> users) {
                 getView().hideLoading();
@@ -180,26 +181,26 @@ categories:
 
 ```java
 package za.co.riggaroo.gus.presentation.search;
- 
- 
+
+
 import java.util.List;
- 
+
 import rx.Scheduler;
 import rx.Subscriber;
 import za.co.riggaroo.gus.data.UserRepository;
 import za.co.riggaroo.gus.data.remote.model.User;
 import za.co.riggaroo.gus.presentation.base.BasePresenter;
- 
+
 class UserSearchPresenter extends BasePresenter<UserSearchContract.View> implements UserSearchContract.Presenter {
     private final Scheduler mainScheduler, ioScheduler;
     private UserRepository userRepository;
- 
+
     UserSearchPresenter(UserRepository userRepository, Scheduler ioScheduler, Scheduler mainScheduler) {
         this.userRepository = userRepository;
         this.ioScheduler = ioScheduler;
         this.mainScheduler = mainScheduler;
     }
- 
+
     @Override
     public void search(String term) {
         checkViewAttached();
@@ -207,15 +208,15 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
         addSubscription(userRepository.searchUsers(term).subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(new Subscriber<List<User>>() {
             @Override
             public void onCompleted() {
- 
+
             }
- 
+
             @Override
             public void onError(Throwable e) {
                 getView().hideLoading();
                 getView().showError(e.getMessage()); //TODO You probably don't want this error to show to users - Might want to show a friendlier message :)
             }
- 
+
             @Override
             public void onNext(List<User> users) {
                 getView().hideLoading();
@@ -261,37 +262,37 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
 	```java
 	private static final String USER_LOGIN_RIGGAROO = "riggaroo";
     private static final String USER_LOGIN_2_REBECCA = "rebecca";
-   
+
     @Test
     public void search_ValidSearchTerm_ReturnsResults() {
         UsersList userList = getDummyUserList();
         when(userRepository.searchUsers(anyString())).thenReturn(Observable.<List<User>>just(userList.getItems()));
- 
+
         userSearchPresenter.search("riggaroo");
- 
+
         verify(view).showLoading();
         verify(view).hideLoading();
         verify(view).showSearchResults(userList.getItems());
         verify(view, never()).showError(anyString());
     }
- 
+
     UsersList getDummyUserList() {
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user1FullDetails());
         githubUsers.add(user2FullDetails());
         return new UsersList(githubUsers);
     }
- 
+
     User user1FullDetails() {
         return new User(USER_LOGIN_RIGGAROO, "Rigs Franks", "avatar_url", "Bio1");
     }
- 
+
     User user2FullDetails() {
         return new User(USER_LOGIN_2_REBECCA, "Rebecca Franks", "avatar_url2", "Bio2");
     }
 	```
 	这个测试断言:假定(**Given**)用户repository返回一组用户，当(**when**)在演示程序中调用search()时，将(**then**)调用`showLoading()`和`showSearchResults()`。这个测试还断言`showError()`方法永远不会被调用。
-	
+
 1. 下一个测试是在UserRepository抛出错误时测试负面场景的测试。
 
 	```java
@@ -309,16 +310,16 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
     }
 	```
 	这个测试正在测试以下内容:假定(**Given**) `userRepository`返回一个异常，在调用`search()`时，应该调用`showError()`。
-	
+
 1. 我们将添加的最后一个测试将断言，如果视图没有附加，将抛出一个异常。
 
 	```java
 	@Test(expected = BasePresenter.MvpViewNotAttachedException.class)
     public void search_NotAttached_ThrowsMvpException() {
         userSearchPresenter.detachView();
- 
+
         userSearchPresenter.search("test");
- 
+
         verify(view, never()).showLoading();
         verify(view, never()).showSearchResults(anyList());
     }
@@ -326,7 +327,7 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
 1. 让我们运行测试，看看我们有多少测试覆盖率。右键单击测试名称并单击“*Run tests with coverage*”。
 
 	![](https://i0.wp.com/riggaroo.co.za/wp-content/uploads/2016/08/Screen-Shot-2016-08-08-at-8.00.29-PM.png?resize=768%2C109&ssl=1)
-	
+
 	我们对UserSearchPresenter有100%的覆盖率！耶!
 
 下一篇博客文章将讨论创建视图和为视图编写测试。

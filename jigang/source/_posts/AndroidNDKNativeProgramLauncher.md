@@ -6,7 +6,7 @@ tags:
 - NDK
 - 翻译
 categories:
-- Android NDK
+- Android
 
 ---
 
@@ -164,7 +164,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := test1
 LOCAL_LDLIBS   = -llog
 LOCAL_CFLAGS    += -fPIE
-LOCAL_LDFLAGS     += -fPIE -pie 
+LOCAL_LDFLAGS     += -fPIE -pie
 LOCAL_SRC_FILES := test1.cpp
 include $(BUILD_EXECUTABLE)
 ```
@@ -214,8 +214,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := test2
 LOCAL_SRC_FILES := test2.cpp
 LOCAL_CFLAGS    := -fPIE
-LOCAL_LDFLAGS     := -fPIE -pie 
-LOCAL_LDLIBS    := -L$(LOCAL_PATH)/../libs/$(TARGET_ARCH_ABI)/ -laddfunc 
+LOCAL_LDFLAGS     := -fPIE -pie
+LOCAL_LDLIBS    := -L$(LOCAL_PATH)/../libs/$(TARGET_ARCH_ABI)/ -laddfunc
 include $(BUILD_EXECUTABLE)
 ```
 

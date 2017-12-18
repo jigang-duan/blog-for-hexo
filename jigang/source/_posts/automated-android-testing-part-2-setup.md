@@ -5,7 +5,7 @@ tags:
 - Android
 - 自动化测试
 categories:
-- Android自动化测试
+- Android
 
 ---
 
@@ -118,7 +118,7 @@ Flavors允许你构建不同版本的应用程序，有一些源代码差异或�
 ```build.gradle
 productFlavors {
         prod {
- 
+
         }
         mock {
             applicationId "za.co.riggaroo.gus.mock"

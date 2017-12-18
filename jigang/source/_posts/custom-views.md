@@ -4,8 +4,9 @@ date: 2017-08-10 20:02:30
 tags:
 - Android
 - UI
-categories:
 - 'Android 用户界面的最佳实践'
+categories:
+- Android
 
 ---
 

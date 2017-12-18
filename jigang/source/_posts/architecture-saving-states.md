@@ -2,10 +2,10 @@
 title: Android 架构组件 - 保存界面状态
 date: 2017-11-09 13:12:41
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

@@ -4,8 +4,9 @@ date: 2017-11-17 19:30:11
 tags:
 - Android
 - 自动化测试
-categories:
 - Android自动化测试
+categories:
+- Android
 
 ---
 
@@ -43,12 +44,12 @@ https://api.github.com/users/riggaroo
 
 ```Java
 package za.co.riggaroo.gus.data.remote.model;
- 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
- 
+
 public class User {
- 
+
     @SerializedName("login")
     @Expose
     private String login;
@@ -88,46 +89,46 @@ public class User {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
- 
+
    ... //see more at https://github.com/riggaroo/GithubUsersSearchApp/blob/testing-tutorial-part3-complete/app/src/main/java/za/co/riggaroo/gus/data/remote/model/User.java
- 
+
 }
 ```
 
 ```Java
 package za.co.riggaroo.gus.data.remote.model;
- 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
- 
+
 import java.util.ArrayList;
 import java.util.List;
- 
+
 public class UsersList {
- 
+
     @SerializedName("total_count")
     @Expose
     private Integer totalCount;
     @SerializedName("items")
     @Expose
     private List<User> items = new ArrayList<User>();
- 
+
     public Integer getTotalCount() {
         return totalCount;
     }
- 
+
     public void setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
     }
- 
+
     public List<User> getItems() {
         return items;
     }
- 
+
     public void setItems(List<User> items) {
         this.items = items;
     }
- 
+
 }
 ```
 
@@ -140,12 +141,12 @@ import retrofit2.http.Query;
 import rx.Observable;
 import za.co.riggaroo.gus.data.remote.model.User;
 import za.co.riggaroo.gus.data.remote.model.UsersList;
- 
+
 public interface GithubUserRestService {
- 
+
     @GET("/search/users?per_page=2")
     Observable<UsersList> searchGithubUsers(@Query("q") String searchTerm);
- 
+
     @GET("/users/{username}")
     Observable<User> getUser(@Path("username") String username);
 }
@@ -239,9 +240,9 @@ Mockito帮助我们实现这一分离
 	```java
 	@Mock
     GithubUserRestService githubUserRestService;
- 
+
     private UserRepository userRepository;
- 
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -259,15 +260,15 @@ Mockito帮助我们实现这一分离
         when(githubUserRestService.searchGithubUsers(anyString())).thenReturn(Observable.just(githubUserList()));
         when(githubUserRestService.getUser(anyString()))
                 .thenReturn(Observable.just(user1FullDetails()), Observable.just(user2FullDetails()));
- 
+
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
- 
+
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
- 
+
         List<List<User>> onNextEvents = subscriber.getOnNextEvents();
         List<User> users = onNextEvents.get(0);
         Assert.assertEquals(USER_LOGIN_RIGGAROO, users.get(0).getLogin());
@@ -276,14 +277,14 @@ Mockito帮助我们实现这一分离
         verify(githubUserRestService).getUser(USER_LOGIN_RIGGAROO);
         verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
- 
+
     private UsersList githubUserList() {
         User user = new User();
         user.setLogin(USER_LOGIN_RIGGAROO);
- 
+
         User user2 = new User();
         user2.setLogin(USER_LOGIN_2_REBECCA);
- 
+
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user);
         githubUsers.add(user2);
@@ -291,7 +292,7 @@ Mockito帮助我们实现这一分离
         usersList.setItems(githubUsers);
         return usersList;
     }
- 
+
     private User user1FullDetails() {
         User user = new User();
         user.setLogin(USER_LOGIN_RIGGAROO);
@@ -300,7 +301,7 @@ Mockito帮助我们实现这一分离
         user.setBio("Bio1");
         return user;
     }
- 
+
     private User user2FullDetails() {
         User user = new User();
         user.setLogin(USER_LOGIN_2_REBECCA);
@@ -313,18 +314,18 @@ Mockito帮助我们实现这一分离
 	这个测试分为三个部分: 给定(given)，什么时候(when)，什么时候(then)。
 	我将我的测试分离开来，因为它确保您的测试是结构化的，并让您思考您正在测试的特定功能。
 	在这个测试中，我正在测试以下内容:给定Github服务返回某些用户时，当我搜索用户时，结果应该返回并正确地转换。
-	
+
 	我发现测试的命名也很重要。我喜欢遵循的命名结构如下:
-	
+
 	`[Name of method under test]_[Conditions of test case]_[Expected Result]`
-	
+
 	在这个例子中，方法的名字是
-	
+
 	在本例中，该方法的名称是`searchUsers_200OkResponse_InvokesCorrectApiCalls()`。
 	在这个测试用例中，一个`TestSubscriber`订阅了可观察到的搜索查询。
 	然后在`TestSubscriber`上进行断言，以确保它具有预期的结果。
 1. 下一个单元测试将测试如果一个IOException被搜索服务调用抛出，那么网络调用将被重试。
-	
+
 	```java
  	@Test
     public void searchUsers_IOExceptionThenSuccess_SearchUsersRetried() {
@@ -333,23 +334,23 @@ Mockito帮助我们实现这一分离
                 .thenReturn(getIOExceptionError(), Observable.just(githubUserList()));
         when(githubUserRestService.getUser(anyString()))
                 .thenReturn(Observable.just(user1FullDetails()), Observable.just(user2FullDetails()));
- 
+
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
- 
+
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
- 
+
         verify(githubUserRestService, times(2)).searchGithubUsers(USER_LOGIN_RIGGAROO);
- 
+
         verify(githubUserRestService).getUser(USER_LOGIN_RIGGAROO);
         verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
 	```
 	在这个测试中，我们断言githubUserRestService被调用两次，而其他的网络调用一次被调用一次。我们还断言订阅者没有终止错误。
-	
+
 ## UserRepositoryImpl的最终单元测试代码
 
 我已经添加了比上面描述的更多的测试。
@@ -358,35 +359,35 @@ Mockito帮助我们实现这一分离
 
 ```java
 public class UserRepositoryImplTest {
- 
+
     private static final String USER_LOGIN_RIGGAROO = "riggaroo";
     private static final String USER_LOGIN_2_REBECCA = "rebecca";
     @Mock
     GithubUserRestService githubUserRestService;
- 
+
     private UserRepository userRepository;
- 
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         userRepository = new UserRepositoryImpl(githubUserRestService);
     }
- 
+
     @Test
     public void searchUsers_200OkResponse_InvokesCorrectApiCalls() {
         //Given
         when(githubUserRestService.searchGithubUsers(anyString())).thenReturn(Observable.just(githubUserList()));
         when(githubUserRestService.getUser(anyString()))
                 .thenReturn(Observable.just(user1FullDetails()), Observable.just(user2FullDetails()));
- 
+
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
- 
+
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
- 
+
         List<List<User>> onNextEvents = subscriber.getOnNextEvents();
         List<User> users = onNextEvents.get(0);
         Assert.assertEquals(USER_LOGIN_RIGGAROO, users.get(0).getLogin());
@@ -395,14 +396,14 @@ public class UserRepositoryImplTest {
         verify(githubUserRestService).getUser(USER_LOGIN_RIGGAROO);
         verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
- 
+
     private UsersList githubUserList() {
         User user = new User();
         user.setLogin(USER_LOGIN_RIGGAROO);
- 
+
         User user2 = new User();
         user2.setLogin(USER_LOGIN_2_REBECCA);
- 
+
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user);
         githubUsers.add(user2);
@@ -410,7 +411,7 @@ public class UserRepositoryImplTest {
         usersList.setItems(githubUsers);
         return usersList;
     }
- 
+
     private User user1FullDetails() {
         User user = new User();
         user.setLogin(USER_LOGIN_RIGGAROO);
@@ -419,7 +420,7 @@ public class UserRepositoryImplTest {
         user.setBio("Bio1");
         return user;
     }
- 
+
     private User user2FullDetails() {
         User user = new User();
         user.setLogin(USER_LOGIN_2_REBECCA);
@@ -428,7 +429,7 @@ public class UserRepositoryImplTest {
         user.setBio("Bio2");
         return user;
     }
- 
+
     @Test
     public void searchUsers_IOExceptionThenSuccess_SearchUsersRetried() {
         //Given
@@ -436,21 +437,21 @@ public class UserRepositoryImplTest {
                 .thenReturn(getIOExceptionError(), Observable.just(githubUserList()));
         when(githubUserRestService.getUser(anyString()))
                 .thenReturn(Observable.just(user1FullDetails()), Observable.just(user2FullDetails()));
- 
+
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
- 
+
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
- 
+
         verify(githubUserRestService, times(2)).searchGithubUsers(USER_LOGIN_RIGGAROO);
- 
+
         verify(githubUserRestService).getUser(USER_LOGIN_RIGGAROO);
         verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
- 
+
     @Test
     public void searchUsers_GetUserIOExceptionThenSuccess_SearchUsersRetried() {
         //Given
@@ -458,49 +459,49 @@ public class UserRepositoryImplTest {
         when(githubUserRestService.getUser(anyString()))
                 .thenReturn(getIOExceptionError(), Observable.just(user1FullDetails()),
                         Observable.just(user2FullDetails()));
- 
+
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
- 
+
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
- 
+
         verify(githubUserRestService, times(2)).searchGithubUsers(USER_LOGIN_RIGGAROO);
- 
+
         verify(githubUserRestService, times(2)).getUser(USER_LOGIN_RIGGAROO);
         verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
- 
+
     @Test
     public void searchUsers_OtherHttpError_SearchTerminatedWithError() {
         //Given
         when(githubUserRestService.searchGithubUsers(anyString())).thenReturn(get403ForbiddenError());
- 
+
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
         userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
- 
+
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertError(HttpException.class);
- 
+
         verify(githubUserRestService).searchGithubUsers(USER_LOGIN_RIGGAROO);
- 
+
         verify(githubUserRestService, never()).getUser(USER_LOGIN_RIGGAROO);
         verify(githubUserRestService, never()).getUser(USER_LOGIN_2_REBECCA);
     }
- 
- 
+
+
     private Observable getIOExceptionError() {
         return Observable.error(new IOException());
     }
- 
+
     private Observable<UsersList> get403ForbiddenError() {
         return Observable.error(new HttpException(
                 Response.error(403, ResponseBody.create(MediaType.parse("application/json"), "Forbidden"))));
- 
+
     }
 }
 ```

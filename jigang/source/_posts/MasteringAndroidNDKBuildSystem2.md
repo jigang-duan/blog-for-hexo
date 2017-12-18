@@ -6,7 +6,7 @@ tags:
 - NDK
 - 翻译
 categories:
-- Android NDK
+- Android
 
 ---
 
@@ -153,12 +153,12 @@ OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=hello
 
 all: $(SOURCES) $(EXECUTABLE)
-$(EXECUTABLE): $(OBJECTS) 
+$(EXECUTABLE): $(OBJECTS)
     $(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 .cpp.o:
     $(CXX) $(CFLAGS) $< -o $@
 
-clean: 
+clean:
     rm *.o hello;
 ```
 
@@ -208,12 +208,12 @@ OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=clcompute
 
 all: $(SOURCES) $(EXECUTABLE)
-$(EXECUTABLE): $(OBJECTS) 
+$(EXECUTABLE): $(OBJECTS)
     $(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 .cpp.o:
     $(CXX) $(CFLAGS) $< -o $@
 
-clean: 
+clean:
     rm *.o $(EXECUTABLE);
 ```
 

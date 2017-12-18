@@ -2,10 +2,10 @@
 title: Android架构组件 添加到你的项目
 date: 2017-11-08 16:24:19
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 
@@ -58,6 +58,6 @@ allprojects {
 
 *  Paging
 	*  `implementation "android.arch.paging:runtime:1.0.0-alpha3"`
-	
+
 
 要了解更多信息，请参阅[添加构建依赖项](https://developer.android.google.cn/studio/build/dependencies.html)。

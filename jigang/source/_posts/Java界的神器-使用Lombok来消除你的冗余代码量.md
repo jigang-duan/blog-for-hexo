@@ -3,8 +3,9 @@ title: Java界的神器-使用Lombok来消除你的冗余代码量
 date: 2017-10-09 11:23:46
 tags:
 - Java
-categories:
 - Android优化
+categories:
+- Android
 
 ---
 

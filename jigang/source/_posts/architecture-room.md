@@ -2,10 +2,10 @@
 title: Android 架构组件 - Room持久性库
 date: 2017-11-09 14:03:04
 tags:
-- Android
 - 架构设计
-categories:
 - Android架构组件
+categories:
+- Android
 
 ---
 

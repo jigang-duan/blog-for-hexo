@@ -3,6 +3,8 @@ title: 现代ANDROID开发入门资源
 date: 2017-11-14 09:54:31
 tags:
 - Android
+categories:
+- Android
 
 ---
 
@@ -143,7 +145,7 @@ Android中有很多不同的布局类型，从FrameLayout到RelativeLayout到Con
 有很多方法可以跟上Android社区的最新变化和发展。我觉得有用的一些方法是：
 
 * 订阅[Android Weekly](http://androidweekly.net/)简讯
-* 在Reddit上关注[/r/androiddev](https://www.reddit.com/r/androiddev/) 
+* 在Reddit上关注[/r/androiddev](https://www.reddit.com/r/androiddev/)
 * 在Twitter上关注[Android Google Developer Experts](https://developer.android.google.cn/experts/all/technology/android)
 * 在Twitter上关注[Android Studio](https://twitter.com/androidstudio)，[Android Dev](https://twitter.com/AndroidDev)
 * 听Android开发播客([Fragmented](http://fragmentedpodcast.com/), [Android Developers Backstage](http://androidbackstage.blogspot.co.za/), [The Context](https://player.fm/series/the-context-androiddev), [Android Snacks](https://player.fm/series/android-snacks))

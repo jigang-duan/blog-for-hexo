@@ -4,8 +4,9 @@ date: 2017-11-20 17:15:26
 tags:
 - Android
 - 自动化测试
-categories:
 - Android自动化测试
+categories:
+- Android
 
 ---
 
@@ -29,17 +30,17 @@ categories:
 
 ```java
 interface UserSearchContract {
- 
+
     interface View extends MvpView {
         void showSearchResults(List<User> githubUserList);
- 
+
         void showError(String message);
- 
+
         void showLoading();
- 
+
         void hideLoading();
     }
- 
+
     interface Presenter extends MvpPresenter<View> {
         void search(String term);
     }
@@ -55,9 +56,9 @@ interface UserSearchContract {
 
 	```java
 	public class UserSearchActivity extends AppCompatActivity implements UserSearchContract.View {
- 
+
     private UserSearchContract.Presenter userSearchPresenter;
- 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,30 +66,30 @@ interface UserSearchContract {
          userSearchPresenter = new UserSearchPresenter(Injection.provideUserRepo(), Schedulers.io(),
                 AndroidSchedulers.mainThread());
         userSearchPresenter.attachView(this);
- 
+
     }
- 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         userSearchPresenter.detachView();
     }
- 
+
     @Override
     public void showSearchResults(List<User> githubUserList) {
-        
+
     }
- 
+
     @Override
     public void showError(String message) {
-     
+
     }
- 
+
     @Override
     public void showLoading() {
-        
+
     }
- 
+
     @Override
     public void hideLoading() {
     }
@@ -109,7 +110,7 @@ interface UserSearchContract {
 (如果你想读更多关于ConstraintLayout的文章，请参阅[我的博客文章](https://riggaroo.co.za/constraintlayout-101-new-layout-builder-android-studio/))
 
 	![](https://i2.wp.com/riggaroo.co.za/wp-content/uploads/2016/08/UserSearchActivity.png?resize=768%2C632&ssl=1)
-	
+
 	```xml
 	<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
@@ -120,7 +121,7 @@ interface UserSearchContract {
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="za.co.riggaroo.gus.presentation.search.UserSearchActivity">
- 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -132,9 +133,9 @@ interface UserSearchContract {
         app:layout_constraintLeft_toLeftOf="@+id/activity_user_search"
         app:layout_constraintRight_toRightOf="@+id/activity_user_search"
         app:layout_constraintTop_toTopOf="@+id/activity_user_search">
- 
+
     </android.support.v7.widget.Toolbar>
- 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_users"
         android:layout_width="0dp"
@@ -148,9 +149,9 @@ interface UserSearchContract {
         app:layout_constraintRight_toRightOf="@+id/activity_user_search"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:listitem="@layout/list_item_user">
- 
+
     </android.support.v7.widget.RecyclerView>
- 
+
     <TextView
         android:id="@+id/text_view_error_msg"
         android:layout_width="wrap_content"
@@ -163,7 +164,7 @@ interface UserSearchContract {
         app:layout_constraintRight_toRightOf="@+id/recycler_view_users"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:text="No Data has loaded"/>
- 
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@style/Widget.AppCompat.ProgressBar"
@@ -177,7 +178,7 @@ interface UserSearchContract {
         app:layout_constraintRight_toRightOf="@+id/recycler_view_users"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:visibility="visible"/>
- 
+
 	</android.support.constraint.ConstraintLayout>
 	```
 1. 	我们还需要向工具栏添加一个SearchView，这样我们就可以在某个地方输入。
@@ -201,7 +202,7 @@ interface UserSearchContract {
 我用ConstraintLayout包含一个ImageView和两个textview。
 
 	![](https://i1.wp.com/riggaroo.co.za/wp-content/uploads/2016/08/List_item_user_designmode.png?resize=768%2C647&ssl=1)
-	
+
 	```xml
 	<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -211,7 +212,7 @@ interface UserSearchContract {
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
                                              android:orientation="vertical">
- 
+
     <ImageView
         android:id="@+id/imageview_userprofilepic"
         android:layout_width="50dp"
@@ -222,7 +223,7 @@ interface UserSearchContract {
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         app:srcCompat="@mipmap/ic_launcher"/>
- 
+
     <TextView
         android:id="@+id/textview_username"
         android:layout_width="wrap_content"
@@ -234,7 +235,7 @@ interface UserSearchContract {
         app:layout_constraintLeft_toRightOf="@+id/imageview_userprofilepic"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         tools:text="Rebecca Franks"/>
- 
+
     <TextView
         android:id="@+id/textview_user_profile_info"
         android:layout_width="match_parent"
@@ -261,11 +262,11 @@ interface UserSearchContract {
     private ProgressBar progressBar;
     private RecyclerView recyclerViewUsers;
     private TextView textViewErrorMessage;
- 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ...
- 
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -273,7 +274,7 @@ interface UserSearchContract {
         recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
         usersAdapter = new UsersAdapter(null, this);
         recyclerViewUsers.setAdapter(usersAdapter);
- 
+
     }
 	```
 1. 我们需要将SearchView连接到我们的activity中，以使它触发presenters `search()`方法。
@@ -297,7 +298,7 @@ interface UserSearchContract {
                 searchActionMenuItem.collapseActionView();
                 return false;
             }
- 
+
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
@@ -321,53 +322,53 @@ interface UserSearchContract {
         textViewErrorMessage.setVisibility(View.GONE);
         usersAdapter.setItems(githubUserList);
     }
- 
+
     @Override
     public void showError(String message) {
         textViewErrorMessage.setVisibility(View.VISIBLE);
         recyclerViewUsers.setVisibility(View.GONE);
         textViewErrorMessage.setText(message);
     }
- 
+
     @Override
     public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewUsers.setVisibility(View.GONE);
         textViewErrorMessage.setVisibility(View.GONE);
     }
- 
+
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
         recyclerViewUsers.setVisibility(View.VISIBLE);
         textViewErrorMessage.setVisibility(View.GONE);
- 
+
     }
 	```
 	我们基本上只是在这里切换视图的可见性，并将usersAdapter设置为服务返回的新items。
-	
+
 1. 	为了完整起见，这里是`UserSearchAdapter`类，它用于`activity`的`RecyclerView`:
 
 	```java
 	class UsersAdapter extends RecyclerView.Adapter<UserViewHolder> {
     	private final Context context;
     	private List<User> items;
- 
+
     	UsersAdapter(List<User> items, Context context) {
         	this.items = items;
         	this.context = context;
     	}
- 
+
     	@Override
     	public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         	View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_user, parent, false);
         	return new UserViewHolder(v);
     	}
- 
+
     	@Override
     	public void onBindViewHolder(UserViewHolder holder, int position) {
        	User item = items.get(position);
- 
+
         	holder.textViewBio.setText(item.getBio());
         	if (item.getName() != null) {
            		holder.textViewName.setText(item.getLogin() + " - " + item.getName());
@@ -376,7 +377,7 @@ interface UserSearchContract {
         	}
         	Picasso.with(context).load(item.getAvatarUrl()).into(holder.imageViewAvatar);
     	}
- 
+
     	@Override
     	public int getItemCount() {
         	if (items == null) {
@@ -384,19 +385,19 @@ interface UserSearchContract {
         	}
         	return items.size();
     	}
- 
+
     	void setItems(List<User> githubUserList) {
         	this.items = githubUserList;
         	notifyDataSetChanged();
     	}
 	}
- 
- 
+
+
 		class UserViewHolder extends RecyclerView.ViewHolder {
     	final TextView textViewBio;
     	final TextView textViewName;
     	final ImageView imageViewAvatar;
- 
+
     	UserViewHolder(View v) {
         	super(v);
         	imageViewAvatar = (ImageView) v.findViewById(R.id.imageview_userprofilepic);
@@ -406,44 +407,44 @@ interface UserSearchContract {
 	}
 	```
 	注射类
-	
+
 	```java
 	public class Injection {
- 
+
     	private static final String BASE_URL = "https://api.github.com";
     	private static OkHttpClient okHttpClient;
     	private static GithubUserRestService userRestService;
     	private static Retrofit retrofitInstance;
- 
- 
+
+
     	public static UserRepository provideUserRepo() {
         	return new UserRepositoryImpl(provideGithubUserRestService());
     	}
- 
+
     	static GithubUserRestService provideGithubUserRestService() {
         	if (userRestService == null) {
             	userRestService = getRetrofitInstance().create(GithubUserRestService.class);
         	}
         	return userRestService;
     	}
- 
+
     	static OkHttpClient getOkHttpClient() {
         	if (okHttpClient == null) {
             	HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             	logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
             	okHttpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
         	}
- 
+
         	return okHttpClient;
     	}
- 
+
     	static Retrofit getRetrofitInstance() {
         	if (retrofitInstance == null) {
             	Retrofit.Builder retrofit = new Retrofit.Builder().client(Injection.getOkHttpClient()).baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
             retrofitInstance = retrofit.build();
- 
+
         }
         return retrofitInstance;
     }
@@ -452,8 +453,6 @@ interface UserSearchContract {
 1. 	现在，如果你运行这款应用，你应该能够在Github上搜索用户名，并查看结果。
 
 	![](https://i2.wp.com/riggaroo.co.za/wp-content/uploads/2016/08/github_user_search.gif?resize=480%2C854&ssl=1)
-	
+
 
 耶!我们有一个工作应用程序。这篇文章的代码可以在这里找到。在接下来的部分中，我们将考虑为应用程序编写UI测试！
-	
-

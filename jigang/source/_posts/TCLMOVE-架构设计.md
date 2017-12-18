@@ -4,7 +4,10 @@ date: 2017-10-19 19:49:52
 tags:
 - iOS
 - 架构设计
-categories: TCLMOVE
+- TCLMOVE
+categories:
+- iOS
+
 ---
 
 ![TCLMOVE](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/tclmove1.png)
