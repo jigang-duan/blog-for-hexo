@@ -13,7 +13,7 @@ tags:
 
 ![kxg](http://oxwfu3w0v.bkt.clouddn.com/2017/10/20/impressjs.png)
 
-[![kxg](http://oxwfu3w0v.bkt.clouddn.com/2017/10/16/timg.gif)](/slideshow/)
+[![kxg](http://oxwfu3w0v.bkt.clouddn.com/2017/10/16/timg.gif)](https://jigang-duan.github.io/laughing-octo-train/slideshow/index.html)
 
 
 <!-- more -->

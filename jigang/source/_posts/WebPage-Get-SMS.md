@@ -52,8 +52,19 @@ categories:
 - 插件无法被浏览器正常的加载
 
 **后续方向：**
+
 - 分析`Web API`是否有对应的接口
+
+  `不可行`,
+
 - 分析`WebExtension`是否可行
+
+  `不可行`，WebExtension由HTML、CSS、JS构成，不能访问Android原生接口
+
+- 借助服务器中转
+
+
+---
 
 参考文档：
 - [Android浏览器插件开发](http://blog.csdn.net/ownerwu/article/details/6429072)

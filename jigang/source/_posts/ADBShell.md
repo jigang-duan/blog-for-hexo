@@ -21,7 +21,7 @@ Android调试桥(`adb`)是一种命令行工具，可以让您与仿真器或连
 1. [包管理器](#package_manager)
 1. [文件管理器](#file_manager)
 1. [网络](#network)
-1. [Logcat](#logcat)
+1. [调试](#logcat)
 1. [截图](#screenshot)
 1. [系统](#system)
 
@@ -48,7 +48,7 @@ emulator-5554  device
 
 ### adb forward
 
-转发socket
+设备的端口转发
 
 `adb forward <local> <remote>`
 
@@ -58,7 +58,17 @@ adb forward tcp:8000 tcp:9000 ##把PC端8000端口的数据, 转发到Android端
 
 执行命令后, PC端的8000端口会被 adb监听, 这个时候我们只需要往8000端口写数据, 这个数据就会发送到手机端的9000端口上.
 
+> 这个命令对于我们在调试的时候非常有用，特别在 IDA 调试中。
+
 > 先决条件:在设备上启用USB调试。
+
+### adb forward
+
+查看设备中可以被调试的应用的进程号
+
+`adb jdwp`
+
+> 这个命令或许用途不是很多，但是对于调试的时候还是有点用途。可以忽略这个命令。
 
 ### adb kill-server
 
@@ -169,6 +179,8 @@ adb install -d test.apk ##允许降级版本代码
 
 adb install -p test.apk ##部分应用程序安装
 ```
+
+> 注意：如果应用已经安装了，需要使用 adb install –r [ apk 文件] 相当于升级安装
 
 ### adb uninstall
 
@@ -497,7 +509,7 @@ ip -f inet addr show wlan0 ## 显示WiFi IP地址
 
 ---
 
-## <a name="logcat"></a>Logcat
+## <a name="logcat"></a>调试
 
 ### adb logcat
 
@@ -505,7 +517,7 @@ ip -f inet addr show wlan0 ## 显示WiFi IP地址
 
 `adb logcat [option] [filter-specs]`
 
-```
+```bash
 adb logcat
 ```
 
@@ -553,9 +565,11 @@ adb logcat -v long ## 显示所有元数据字段和用空行分隔的消息。
 
 转储文件系统数据
 
+把当前系统中所有应用运行的四大组件都会打印出来
+
 `adb shell dumpsys [options]`
 
-```
+```bash
 adb shell dumpsys
 adb shell dumpsys meminfo
 adb shell dumpsys battery
@@ -565,22 +579,238 @@ adb shell dumpsys activity
 adb shell dumpsys gfxinfo com.android.phone ## 测量com.android.phone 用户界面性能
 ```
 
+#### adb shell dumpsys activity top
+
+可以查看当前应用的 activity 信息
+
+用法：
+- 运行需要查看的应用，然后运行此命令即可
+
+```bash
+$ adb shell dumpsys activity top
+TASK com.android.settings id=513
+  ACTIVITY com.android.settings/.MainSettings f08d06d pid=7492
+    Local Activity d9b221 State:
+      mResumed=true mStopped=false mFinished=false
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 ?mcc?mnc zh_CN ldltr sw360dp w360dp h616dp 320dpi nrml long port finger -keyb/v/h -nav/h s.4 themeChanged=0 themeChangedFlags=0}
+      mLoadersStarted=true
+      Active Fragments in c1729ea:
+        #0: SettingsFragment{99e54db #0 id=0x1020002}
+          mFragmentId=#1020002 mContainerId=#1020002 mTag=null
+          mState=5 mIndex=0 mWho=android:fragment:0 mBackStackNesting=0
+          mAdded=true mRemoving=false mResumed=true mFromLayout=false mInLayout=false
+          mHidden=false mDetached=false mMenuVisible=true mHasMenu=false
+          mRetainInstance=false mRetaining=false mUserVisibleHint=true
+          mFragmentManager=FragmentManager{c1729ea in HostCallbacks{2a70b78}}
+          mHost=android.app.Activity$HostCallbacks@2a70b78
+          mContainer=android.widget.FrameLayout{3f44a4f V.E...... ........ 0,128-720,1280 #1020002 android:id/content}
+          mView=com.miui.internal.widget.ActionBarOverlayLayout{aa116cc V.E...... ........ 0,0-720,1152 #100b004e miui:id/action_bar_overlay_layout}
+          Child FragmentManager{d6ea251 in SettingsFragment{99e54db}}:
+            FragmentManager misc state:
+              mHost=android.app.Activity$HostCallbacks@2a70b78
+              mContainer=android.app.Fragment$1@935fab6
+              mParent=SettingsFragment{99e54db #0 id=0x1020002}
+              mCurState=5 mStateSaved=false mDestroyed=false
+      Added Fragments:
+        #0: SettingsFragment{99e54db #0 id=0x1020002}
+      FragmentManager misc state:
+        mHost=android.app.Activity$HostCallbacks@2a70b78
+        mContainer=android.app.Activity$HostCallbacks@2a70b78
+        mCurState=5 mStateSaved=false mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mConsumeBatchedInputImmediatelyScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=false
+      mLastFrameTime=113407 (34516 ms ago)
+    View Hierarchy:
+      com.android.internal.policy.PhoneWindow$DecorView{430fc62 V.E...... R....... 0,0-720,1280}
+        com.miui.internal.widget.ActionBarOverlayLayout{1267cae V.E...... ........ 0,0-720,1280 #100b004e miui:id/action_bar_overlay_layout}
+          android.widget.FrameLayout{3f44a4f V.E...... ........ 0,128-720,1280 #1020002 android:id/content}
+            android.widget.FrameLayout{9dc5534 V.E...... ........ 0,0-720,1152}
+              miui.view.ViewPager{efe4f5d VFED..... ........ 0,0-720,1152 #100b0000 miui:id/view_pager}
+              android.widget.ListView{8c295a3 G.ED.VC.. ......I. 0,0-0,0 #102000a android:id/list}
+            com.miui.internal.widget.ActionBarOverlayLayout{aa116cc V.E...... ........ 0,0-720,1152 #100b004e miui:id/action_bar_overlay_layout}
+              android.widget.FrameLayout{9510d15 V.E...... ........ 0,0-720,1152 #1020002 android:id/content}
+                android.widget.FrameLayout{16c61d0 V.E...... ........ 0,0-720,1152}
+                  android.widget.ListView{7d335c9 VFED.VC.. .F...... 0,0-720,1152 #102000a android:id/list}
+                    ... ...
+
+    Looper (main, tid 1) {d2363b7}
+      Message 0: { when=+23s220ms what=1 target=com.xiaomi.mistatistic.sdk.controller.p$1 }
+      (Total messages: 1, polling=false, quitting=false)
+```
+
+#### adb shell dumpsys package
+
+可以查看指定包名应用的详细信息(相当于应用的 AndroidManifest.xml 中的内容)
+
+`adb shell dumpsys package [pkgname]`
+
+```bash
+$ adb shell dumpsys package com.android.settings
+Activity Resolver Table:
+  Full MIME Types:
+      vnd.android.cursor.item/telephony-carrier:
+        94d08b7 com.android.settings/.MiuiApnEditor
+      vnd.android.document/root:
+        2fea824 com.android.settings/.Settings$PublicVolumeSettingsActivity
+      vnd.android.cursor.dir/telephony-carrier:
+        94d08b7 com.android.settings/.MiuiApnEditor
+
+  Base MIME Types:
+      vnd.android.document:
+        2fea824 com.android.settings/.Settings$PublicVolumeSettingsActivity
+
+  ... ...
+
+```
+
+>这里看到就是相当于把应用的清单文件打印出来而已。
+
+#### adb shell dumpsys meminfo
+
+可以查看指定进程名或者是进程 id 的内存信息
+
+`adb shell dumpsys meminfo [pname/pid]`
+
+```bash
+$ adb shell dumpsys meminfo 7492
+Applications Memory Usage (kB):
+Uptime: 1360979 Realtime: 1360979
+
+** MEMINFO in pid 7492 [com.android.settings] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap     4526     4440        0        0     8384     7508      875
+  Dalvik Heap     6077     6016       36     3872    15479    10500     4979
+ Dalvik Other      994      992        0        4                           
+        Stack      280      280        0        0                           
+       Ashmem       12       12        0        0                           
+      Gfx dev     3228     3180        0        0                           
+    Other dev        4        0        4        0                           
+     .so mmap      733      208        0     2516                           
+    .apk mmap       13        0        0        0                           
+    .dex mmap      260       32      116       20                           
+    .oat mmap     1101      200      200        4                           
+    .art mmap     1809     1564       28      104                           
+   Other mmap       11        8        0        0                           
+      Unknown      261      260        0        0                           
+        TOTAL    19309    17192      384     6520    23863    18008     5854
+
+ App Summary
+                       Pss(KB)
+                        ------
+           Java Heap:     7608
+         Native Heap:     4440
+                Code:      756
+               Stack:      280
+            Graphics:     3180
+       Private Other:     1312
+              System:     1733
+
+               TOTAL:    19309      TOTAL SWAP (KB):     6520
+
+ Objects
+               Views:      122         ViewRootImpl:        1
+         AppContexts:        4           Activities:        1
+              Assets:        5        AssetManagers:        2
+       Local Binders:       49        Proxy Binders:       32
+       Parcel memory:        6         Parcel count:       27
+    Death Recipients:        2      OpenSSL Sockets:        0
+
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:       62
+
+```
+
+> 利用这个命令可以查看进程当前的内存情况
+
+#### adb shell dumpsys dbinfo
+
+可以查看指定包名应用的数据库存储信息(包括存储的sql语句)
+
+`adb shell dumpsys dbinfo [packagename]`
+
+```bash
+$ adb shell dumpsys dbinfo com.android.mms
+Applications Database Info:
+
+** Database info for pid 11635 [com.android.mms] **
+
+Connection pool for /data/user/0/com.android.mms/databases/cache.db:
+  Open: true
+  Max connections: 1
+  Available primary connection:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2017-12-25 10:37:27.000] executeForCursorWindow took 1ms - succeeded, sql="SELECT action_id, action, timestamp FROM ad_cache"
+        1: [2017-12-25 10:37:27.000] prepare took 0ms - succeeded, sql="SELECT action_id, action, timestamp FROM ad_cache"
+        2: [2017-12-25 10:37:26.999] executeForLong took 1ms - succeeded, sql="PRAGMA user_version;"
+        3: [2017-12-25 10:37:26.999] prepare took 0ms - succeeded, sql="PRAGMA user_version;"
+        4: [2017-12-25 10:37:26.998] executeForString took 1ms - succeeded, sql="SELECT locale FROM android_metadata UNION SELECT NULL ORDER BY locale DESC LIMIT 1"
+        5: [2017-12-25 10:37:26.995] execute took 3ms - succeeded, sql="CREATE TABLE IF NOT EXISTS android_metadata (locale TEXT)"
+        6: [2017-12-25 10:37:26.995] executeForLong took 0ms - succeeded, sql="PRAGMA wal_autocheckpoint=100"
+        7: [2017-12-25 10:37:26.995] executeForLong took 0ms - succeeded, sql="PRAGMA wal_autocheckpoint"
+        8: [2017-12-25 10:37:26.995] executeForLong took 0ms - succeeded, sql="PRAGMA journal_size_limit=524288"
+        9: [2017-12-25 10:37:26.995] executeForLong took 0ms - succeeded, sql="PRAGMA journal_size_limit"
+        10: [2017-12-25 10:37:26.995] executeForString took 0ms - succeeded, sql="PRAGMA synchronous"
+        11: [2017-12-25 10:37:26.995] executeForString took 0ms - succeeded, sql="PRAGMA journal_mode=PERSIST"
+        12: [2017-12-25 10:37:26.994] executeForString took 1ms - succeeded, sql="PRAGMA journal_mode"
+        13: [2017-12-25 10:37:26.994] executeForLong took 0ms - succeeded, sql="PRAGMA foreign_keys"
+        14: [2017-12-25 10:37:26.993] executeForLong took 1ms - succeeded, sql="PRAGMA page_size"
+  Available non-primary connections:
+    <none>
+  Acquired connections:
+    <none>
+  Connection waiters:
+    <none>
+
+```
+
+> 这里可以清晰的看到应用执行过的 sql 语句信息。在对应用逆向的时候具有一定用途。毕竟可以查看应用操作数据库信息了。
+
 ### adb shell dumpstate
 
 转储状态
 
-```
+```bash
 adb shell dumpstate
 adb shell dumpstate > state.logs ## 将状态转储到文件中
 ```
 
 ---
 
+### adb shell input text
+
+输入文本内容
+
+`adb shell input text [需要输入文本框内容]`
+
+案例：
+-  让需要输入内容的文本框获取焦点，adb shell input text 'HelloWorld'
+
+> 注意：这个命令也可以模拟物理按键，虚拟键盘，滑动，滚动等事件
+
+> 延伸：这个命令对于我们在需要输入一大堆信息到文本框中的时候非常有用，比如现在你在 PC 端有一段内容，想输入到手机的某个搜索框中，那么你可以通过把这段内容发送到手机，然后在复制操作。但是有了这个命令就非常简单，先让你想要输入的文本框获取焦点，然后运行这个命令即可。
+
 ## <a name="screenshot"></a>截图
 
 ### adb shell screencap
 
-拿一个设备显示屏的截图。
+截屏操作。
 
 `adb shell screencap <filename>`
 
@@ -595,7 +825,9 @@ adb pull /sdcard/screen.png
 
 ### adb shell screenrecord [4.4+]
 
-记录运行Android 4.4(API级别19)的设备的显示和更高的显示。
+录屏操作
+
+录屏运行Android 4.4(API级别19)或更高的设备。
 
 `adb shell screenrecord [options] <filename>`
 
