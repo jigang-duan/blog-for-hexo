@@ -639,3 +639,43 @@ lexik_jwt_authentication:
 ```bash
 $ bin/phpunit
 ```
+
+### Shop APIs
+
+```bash
+$ bin/console debug:router | grep shop-api
+  shop_api_pickup_cart                                   POST            ANY      ANY    /shop-api/carts/{token}                                                   
+  shop_api_cart_summary                                  GET             ANY      ANY    /shop-api/carts/{token}                                                   
+  shop_api_add_to_cart                                   POST            ANY      ANY    /shop-api/carts/{token}/items                                             
+  shop_api_add_multiple_items_to_cart                    POST            ANY      ANY    /shop-api/carts/{token}/multiple-items                                    
+  shop_api_drop_cart                                     DELETE          ANY      ANY    /shop-api/carts/{token}                                                   
+  shop_api_change_item_quantity                          PUT             ANY      ANY    /shop-api/carts/{token}/items/{id}                                        
+  shop_api_remove_item_from_cart                         DELETE          ANY      ANY    /shop-api/carts/{token}/items/{id}                                        
+  shop_api_estimated_shipping_cost                       GET             ANY      ANY    /shop-api/carts/{token}/estimated-shipping-cost                           
+  shop_api_add_coupon_to_cart                            PUT             ANY      ANY    /shop-api/carts/{token}/coupon                                            
+  shop_api_remove_coupon_to_cart                         DELETE          ANY      ANY    /shop-api/carts/{token}/coupon                                            
+  shop_api_product_show_details_by_slug                  GET             ANY      ANY    /shop-api/products-by-slug/{slug}                                         
+  shop_api_add_product_review_by_slug                    POST            ANY      ANY    /shop-api/product-reviews-by-slug/{slug}                                  
+  shop_api_product_show_catalog_by_slug                  GET             ANY      ANY    /shop-api/taxon-products-by-slug/{taxonSlug}                              
+  shop_api_product_show_reviews_by_slug                  GET             ANY      ANY    /shop-api/product-reviews-by-slug/{slug}                                  
+  shop_api_product_show_details_by_code                  GET             ANY      ANY    /shop-api/products/{code}                                                 
+  shop_api_product_show_catalog_by_code                  GET             ANY      ANY    /shop-api/taxon-products/{code}                                           
+  shop_api_product_show_reviews_by_code                  GET             ANY      ANY    /shop-api/products/{code}/reviews                                         
+  shop_api_add_product_review_by_code                    POST            ANY      ANY    /shop-api/products/{code}/reviews                                         
+  shop_api_taxon_show_details                            GET             ANY      ANY    /shop-api/taxons/{code}                                                   
+  shop_api_taxon_show_tree                               GET             ANY      ANY    /shop-api/taxons/                                                         
+  sylius_shop_api_register                               POST            ANY      ANY    /shop-api/register                                                        
+  sylius_shop_api_resend_verification_token              POST            ANY      ANY    /shop-api/resend-verification-link                                        
+  sylius_shop_api_user_verification                      PUT             ANY      ANY    /shop-api/verify-account                                                  
+  sylius_shop_api_reset_password                         PUT             ANY      ANY    /shop-api/request-password-reset                                          
+  sylius_shop_password_reset                             PUT             ANY      ANY    /shop-api/password-reset/{token}                                          
+  shop_api_address_checkout                              PUT             ANY      ANY    /shop-api/checkout/{token}/address                                        
+  shop_api_summarize_checkout                            GET             ANY      ANY    /shop-api/checkout/{token}                                                
+  shop_api_available_shipping_checkout                   GET             ANY      ANY    /shop-api/checkout/{token}/shipping                                       
+  shop_api_choose_shipping_method                        PUT             ANY      ANY    /shop-api/checkout/{token}/shipping/{shippingId}                          
+  shop_api_available_payment_methods_checkout            GET             ANY      ANY    /shop-api/checkout/{token}/payment                                        
+  shop_api_choose_payment_method_checkout                PUT             ANY      ANY    /shop-api/checkout/{token}/payment/{paymentId}                            
+  shop_api_complete_checkout                             PUT             ANY      ANY    /shop-api/checkout/{token}/complete                                       
+  shop_api_me                                            GET             ANY      ANY    /shop-api/me                                                              
+  shop_api_login_check                                   POST            ANY      ANY    /shop-api/login_check                                                      
+```
